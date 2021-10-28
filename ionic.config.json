@@ -1,0 +1,7 @@
+{
+  "name": "ucommerce-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
