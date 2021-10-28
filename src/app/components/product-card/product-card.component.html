@@ -12,7 +12,7 @@
     </ion-row>
   </ion-grid> -->
 
-<ion-card style="height: 100%;" href="products/{{id}}"> 
+<ion-card style="height: 100%;" [routerLink]="['/products', id]">
   <img src="{{image}}"/>
   <ion-card-header>
     <ion-card-subtitle>{{name}}</ion-card-subtitle>
@@ -21,6 +21,6 @@
 
   <ion-card-content>
     {{description}}
-  </ion-card-content>
+  </ion-card-content> 
 
 </ion-card>

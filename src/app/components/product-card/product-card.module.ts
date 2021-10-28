@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ProductCardComponent } from './product-card.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, IonicModule],
+  imports: [ CommonModule, FormsModule, IonicModule, RouterModule],
   declarations: [ProductCardComponent],
   exports: [ProductCardComponent]
 })
