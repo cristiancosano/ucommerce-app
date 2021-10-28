@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Tab 2</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <div id="products" *ngFor="let product of products">
+      <app-product-card name="{{product.name}}" description="{{product.description}}" price="{{product.unitPrice}}" image="https://picsum.photos/800/400"></app-product-card>
+    </div>
+</ion-content>
