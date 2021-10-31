@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 })
 export class HomePage implements OnInit {
 
-  private products: Product;
+  private products: Array<Product>;
 
   constructor(private productService: ProductService) { }
 
@@ -18,8 +18,8 @@ export class HomePage implements OnInit {
     
   }
 
-  getProducts(){
-    this.productService.getProducts().then((data: Product) => {
+  getProducts = () => {
+    this.productService.getProducts().then((data: Array<Product>) => {
       this.products = data
     })
   }
