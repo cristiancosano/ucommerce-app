@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
+import { UserService } from 'src/app/services/user/user.service';
 
 
 @Component({
@@ -9,7 +10,11 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class AccountPage implements OnInit {
 
-  constructor(public actionSheetController: ActionSheetController) { }
+  private isAuth: Boolean;
+
+  constructor(public actionSheetController: ActionSheetController, private userService: UserService) {
+    this.isAuth = userService.isAuth();
+  }
 
   ngOnInit() {
   }
