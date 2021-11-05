@@ -5,5 +5,11 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let category of categories">
+        <app-category-card id="{{category.id}}" name="{{category.name}}"></app-category-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
