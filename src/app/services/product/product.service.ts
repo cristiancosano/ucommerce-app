@@ -17,7 +17,12 @@ export class ProductService {
     })
   }
 
-  getCategory(id: number){
+  getProduct(id: number){
+    return new Promise(resolve => {
+      this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => console.log(error))
+    })
+  }
+  getProductByCategory(id: number){
     return new Promise(resolve => {
       this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => console.log(error))
     })

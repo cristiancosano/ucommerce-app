@@ -9,6 +9,7 @@ import { Category } from 'src/app/interfaces/Category';
 })
 export class CategoriesPage implements OnInit {
   private categories: Array<Category>;
+ 
 
   constructor(private categoryService: CategoryService) { }
 
