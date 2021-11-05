@@ -9,9 +9,17 @@ export class CategoryCardComponent implements OnInit {
 
   @Input() name: string;
   @Input() id: number;
+  @Input() index: number;
 
-  constructor() { }
+  private color: string;
+  private colors: Array<string> = ['primary', 'dark', 'success', 'danger', 'secondary', 'medium', 'light', 'warning', 'tertiary'];
 
-  ngOnInit() {}
+  constructor() {
+
+   }
+
+  ngOnInit() {
+    this.color = this.colors[this.index % this.colors.length];
+  }
 
 }
