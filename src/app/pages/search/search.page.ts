@@ -17,9 +17,11 @@ export class SearchPage implements OnInit {
   }
 
   searchProducts(){
-    this.productService.getProductsByText(this.searchText).then(products => {
-      this.products = products
-    })
+    this.products = undefined
+    if(this.searchText.length > 3)
+      this.productService.getProductsByText(this.searchText).then(products => {
+        this.products = products
+      })
   }
 
 }

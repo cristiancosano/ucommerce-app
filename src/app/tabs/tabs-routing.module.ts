@@ -8,8 +8,8 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'home',
-        loadChildren: () => import('../pages/home/home.module').then( m => m.HomePageModule)
+        path: 'products',
+        loadChildren: () => import('../pages/products/home.module').then( m => m.HomePageModule)
       },
       {
         path: 'categories',
@@ -24,27 +24,19 @@ const routes: Routes = [
         loadChildren: () => import('../pages/search/search.module').then(m => m.SearchPageModule)
       },
       {
-        path: 'products',
-        loadChildren: () => import('../pages/product/product.module').then( m => m.ProductPageModule)
-      },
-      {
         path: 'account',
         loadChildren: () => import('../pages/account/account.module').then( m => m.AccountPageModule)
       },
       {
-        path: 'login',
-        loadChildren: () => import('../pages/login/login.module').then( m => m.LoginPageModule)
-      },
-      {
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/products',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/products',
     pathMatch: 'full'
   }
 ];

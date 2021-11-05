@@ -5,7 +5,7 @@ import { ProductPage } from './product.page';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: '',
     component: ProductPage
   },
 ];
