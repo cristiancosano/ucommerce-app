@@ -8,10 +8,11 @@ const routes: Routes = [
     path: '',
     component: CategoriesPage
   },
+ 
   {
     path: ':id',
-    loadChildren: () => import('./categories.module').then(m => m.CategoriesPageModule)
-  }
+    loadChildren: () => import('./category-products/category-products.module').then( m => m.CategoryProductsPageModule)
+  },
 ];
 
 @NgModule({
