@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from 'src/app/interfaces/Product';
 import { environment } from 'src/environments/environment';
@@ -22,9 +22,18 @@ export class ProductService {
       this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => console.log(error))
     })
   }
-  getProductByCategory(id: number){
+  getProductsByCategory(id: number){
     return new Promise(resolve => {
       this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => console.log(error))
+    })
+  }
+
+  getProductsByText(text: string){
+    const params = new HttpParams().appendAll({text})
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+    return new Promise(resolve => {
+      this.http.post(this.host+'/search', params, {headers}).subscribe(data => resolve(data), error => console.log(error))
     })
   }
 

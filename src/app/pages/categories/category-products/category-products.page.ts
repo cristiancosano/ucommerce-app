@@ -24,7 +24,7 @@ export class CategoryProductsPage implements OnInit {
   }
 
   getProducts = () => {
-    this.productService.getProductByCategory(this.id).then((data: Array<Product>) => {
+    this.productService.getProductsByCategory(this.id).then((data: Array<Product>) => {
       this.products = data
     })
   }
