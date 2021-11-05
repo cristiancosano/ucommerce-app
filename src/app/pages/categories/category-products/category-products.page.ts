@@ -11,7 +11,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 export class CategoryProductsPage implements OnInit {
 
   private products: Array<Product>;
-  private category: "Prueba Categoria";
+  private category: any;
   private id: number;
 
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
@@ -19,7 +19,8 @@ export class CategoryProductsPage implements OnInit {
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
     console.log(this.id)
-    this.getProducts()
+    this.category = {name: 'prueba'}
+    //this.getProducts()
   }
 
   getProducts = () => {
