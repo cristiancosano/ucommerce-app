@@ -3,10 +3,14 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Product {{id}}</ion-title>
+    <ion-title>{{product.name || 'Product #'+id}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <p>Esta es la pagina del producto con id = {{id}}</p>
+  <img src="https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg"/>
+  <h1>{{product.name}}</h1>
+  <p>{{product.description}}</p>
+
+  <ion-button expand="block">Buy for {{product.unitPrice}}€</ion-button>
 </ion-content>

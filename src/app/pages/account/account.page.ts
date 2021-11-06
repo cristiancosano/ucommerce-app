@@ -10,10 +10,8 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class AccountPage implements OnInit {
 
-  private isAuth: Boolean;
 
   constructor(public actionSheetController: ActionSheetController, private userService: UserService) {
-    this.isAuth = userService.isAuth();
   }
 
   ngOnInit() {
@@ -27,7 +25,9 @@ export class AccountPage implements OnInit {
           text: 'Logout',
           role: 'destructive',
           icon: 'log-out-outline',
-          handler: () => console.log('Logout clicked')  
+          handler: () => {
+            this.userService.logout()
+          } 
         }, 
         {
           text: 'Cancel',
@@ -41,6 +41,10 @@ export class AccountPage implements OnInit {
 
     const { role } = await actionSheet.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
+  }
+
+  isAuth = () => {
+    return  this.userService.isAuth();
   }
 
 }
