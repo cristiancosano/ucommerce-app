@@ -23,6 +23,11 @@ export class CategoryService {
       this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => console.log(error))
     })
   }
+  getProductsByCategoryId(id: number){
+    return new Promise(resolve => {
+      this.http.get(this.host+`/${id}/products`).subscribe(data => resolve(data), error => console.log(error))
+    })
+  }
 
   createCategory(category: Category, token: string){
     return new Promise(resolve =>{
@@ -41,5 +46,7 @@ export class CategoryService {
       this.http.delete(this.host+`/${id}`).subscribe(data => resolve(data), error => console.log(error))
     })
   }
+
+
 
 }

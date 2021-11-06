@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Category } from 'src/app/interfaces/Category';
 import { Product } from 'src/app/interfaces/Product';
-import { ProductService } from 'src/app/services/product/product.service';
+import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
   selector: 'app-category-products',
@@ -11,20 +12,27 @@ import { ProductService } from 'src/app/services/product/product.service';
 export class CategoryProductsPage implements OnInit {
 
   private products: Array<Product>;
-  private category: any;
+  private category: Category;
   private id: number;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute) { }
+  constructor(private categoryService: CategoryService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
-    console.log(this.id)
-    this.category = {name: 'prueba'}
-    //this.getProducts()
+    this.products = []
+    this.category = {name: ''}
+    this.getCategory()
+    this.getProducts()
+  }
+
+  getCategory = () => {
+    this.categoryService.getCategory(this.id).then((data: Category) => {
+      this.category = data
+    })
   }
 
   getProducts = () => {
-    this.productService.getProductsByCategory(this.id).then((data: Array<Product>) => {
+    this.categoryService.getProductsByCategoryId(this.id).then((data: Array<Product>) => {
       this.products = data
     })
   }

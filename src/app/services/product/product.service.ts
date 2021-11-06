@@ -22,11 +22,6 @@ export class ProductService {
       this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => reject(error))
     })
   }
-  getProductsByCategory(id: number){
-    return new Promise(resolve => {
-      this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => console.log(error))
-    })
-  }
 
   getProductsByText(text: string){
     const params = new HttpParams().appendAll({text})
