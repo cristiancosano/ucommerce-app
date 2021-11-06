@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Order } from 'src/app/interfaces/Order';
 import { environment } from 'src/environments/environment';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +9,18 @@ import { environment } from 'src/environments/environment';
 export class OrderService {
   private host = environment.apiHost + '/orders'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
 
 
 
-  getOrders(token: string, customerId: number){
+  getOrders(customerId: number){
     return new Promise(resolve => {
+        const token = this.userService.getToken();
         const params = new HttpParams().appendAll({token})
+        console.log(token)
         const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        this.http.get(this.host+`/${customerId}`, {params} ).subscribe(data => resolve(data), error => console.log(error))
+        this.http.get(this.host+`/${customerId}`, {headers, params}).subscribe(data => resolve(data), error => console.log(error))
     })
   }
 }
