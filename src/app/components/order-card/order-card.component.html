@@ -1,0 +1,19 @@
+<ion-card style="height: 100%;" [routerLink]="['/orders', id]" class="ion-text-center">
+
+  <ion-card-header>
+    <ion-card-subtitle>{{orderId}}</ion-card-subtitle>
+    <ion-card-title>Cliente {{customerId}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    Precio total: {{total}}
+    Fecha de inicio: {{createdAt}}
+    Fecha de compra: {{updatedAt}}
+  </ion-card-content> 
+
+
+
+
+
+
+</ion-card>

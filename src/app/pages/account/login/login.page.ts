@@ -27,4 +27,8 @@ export class LoginPage implements OnInit {
       this.navCtrl.back()
     }
   }
+
+
+  isAuth = () => this.userService.isAuth()
+
 }

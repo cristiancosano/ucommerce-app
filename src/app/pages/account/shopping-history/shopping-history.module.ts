@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ShoppingHistoryPageRoutingModule } from './shopping-history-routing.module';
 
 import { ShoppingHistoryPage } from './shopping-history.page';
+import { OrderCardComponentModule } from 'src/app/components/order-card/order-card.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ShoppingHistoryPageRoutingModule
+    ShoppingHistoryPageRoutingModule,
+    OrderCardComponentModule
   ],
   declarations: [ShoppingHistoryPage]
 })
