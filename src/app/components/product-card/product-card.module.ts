@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   imports: [ CommonModule, FormsModule, IonicModule, RouterModule],
   declarations: [ProductCardComponent],
-  exports: [ProductCardComponent]
+  exports: [ProductCardComponent],
+  providers: []
 })
 export class ProductCardComponentModule {}

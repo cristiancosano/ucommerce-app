@@ -6,7 +6,7 @@
   </ion-card-header>
 
   <ion-card-content>
-    {{description}}
+    {{(description.length > 144) ?  (description | slice:0:144)+'...' : description}}
   </ion-card-content> 
 
 </ion-card>
