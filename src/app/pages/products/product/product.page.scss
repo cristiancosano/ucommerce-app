@@ -10,3 +10,17 @@ img {
 h1{
     text-align: center;
 }
+
+.error{
+    height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.151);
+  font-size: 24px;
+  font-style: oblique;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  /* align horizontal */
+  align-items: center;
+  /* align vertical */
+}

@@ -18,8 +18,8 @@ export class ProductService {
   }
 
   getProduct(id: number){
-    return new Promise(resolve => {
-      this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => console.log(error))
+    return new Promise((resolve, reject) => {
+      this.http.get(this.host+`/${id}`).subscribe(data => resolve(data), error => reject(error))
     })
   }
   getProductsByCategory(id: number){
