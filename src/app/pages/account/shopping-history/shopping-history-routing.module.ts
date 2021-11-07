@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: ShoppingHistoryPage
-  }
+  },
+  {
+    path: ':id',
+    loadChildren: () => import('./orderHistory/orderHistory.module').then( m => m.OrderHistoryPageModule)
+  },
 ];
 
 @NgModule({

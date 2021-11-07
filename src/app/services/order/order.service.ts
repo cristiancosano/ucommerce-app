@@ -7,7 +7,8 @@ import { UserService } from '../user/user.service';
   providedIn: 'root'
 })
 export class OrderService {
-  private host = environment.apiHost + '/orders'
+  private host = environment.apiHost + '/users'
+  private host2 = environment.apiHost + '/orders'
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
@@ -19,8 +20,20 @@ export class OrderService {
         const token = this.userService.getToken();
         const params = new HttpParams().appendAll({token})
         console.log(token)
+        console.log(this.host)
         const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        this.http.get(this.host+`/${customerId}`, {headers, params}).subscribe(data => resolve(data), error => console.log(error))
+        this.http.get(this.host+`/${customerId}/shopping-history`, {headers, params}).subscribe(data => resolve(data), error => console.log(error))
+    })
+  }
+
+  getOrderById(orderId: number){
+    return new Promise(resolve => {
+        const token = this.userService.getToken();
+        const params = new HttpParams().appendAll({token})
+        console.log(token)
+        console.log(this.host)
+        const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        this.http.get(this.host2+`/${orderId}`, {headers, params}).subscribe(data => resolve(data), error => console.log(error))
     })
   }
 }

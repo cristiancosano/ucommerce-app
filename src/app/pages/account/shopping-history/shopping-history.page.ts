@@ -16,6 +16,7 @@ export class ShoppingHistoryPage implements OnInit {
   }
 
   getOrders = () => {
+    console.log("hola")
     this.orderService.getOrders(1).then((data: Array<Order>) => {
       this.orders = data
       console.log(data)
