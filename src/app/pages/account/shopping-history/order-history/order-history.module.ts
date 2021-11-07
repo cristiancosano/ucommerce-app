@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { OrderHistoryPageRoutingModule } from './orderHistory-routing.module';
+import { OrderHistoryPageRoutingModule } from './order-history-routing.module';
 
-import { OrderHistoryPage } from './orderHistory.page';
+import { OrderHistoryPage } from './order-history.page';
 
 @NgModule({
   imports: [

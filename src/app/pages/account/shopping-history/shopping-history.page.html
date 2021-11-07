@@ -11,7 +11,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size-xs="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let order of orders">
-        <app-order-card orderId="{{order.orderId}}" total="{{order.total}}" createdAt="{{order.createdAt}}" updatedAt="{{order.updatedAt}}"></app-order-card>
+        <app-order-card id="{{order.orderId}}" total="{{order.total}}" createdAt="{{order.createdAt}}" updatedAt="{{order.updatedAt}}"></app-order-card>
       </ion-col>
     </ion-row>
   </ion-grid>

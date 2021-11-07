@@ -5,9 +5,9 @@ import { Order } from 'src/app/interfaces/Order';
 import { OrderService } from 'src/app/services/order/order.service';
 
 @Component({
-  selector: 'app-orderHistory',
-  templateUrl: './orderHistory.page.html',
-  styleUrls: ['./orderHistory.page.scss'],
+  selector: 'app-order-history',
+  templateUrl: './order-history.page.html',
+  styleUrls: ['./order-history.page.scss'],
 })
 export class OrderHistoryPage implements OnInit {
 

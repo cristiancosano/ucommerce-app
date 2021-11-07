@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    loadChildren: () => import('./orderHistory/orderHistory.module').then( m => m.OrderHistoryPageModule)
+    loadChildren: () => import('./order-history/order-history.module').then( m => m.OrderHistoryPageModule)
   },
 ];
 

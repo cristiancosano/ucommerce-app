@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./order-card.component.scss'],
 })
 export class OrderCardComponent implements OnInit {
-  @Input() orderId: any;
+  @Input() id: any;
   @Input() total: any;
   @Input() createdAt: any;
   @Input() updatedAt: any;
