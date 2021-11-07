@@ -1,9 +1,40 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>order-history</ion-title>
+    <ion-title>Order History with ID: {{order.orderId}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div *ngIf="order.orderId !== 0">
+    <img src="https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg"/>
 
+    <h1>{{order.orderId}}</h1>
+    <p>{{order.total}}</p>
+    <p>{{order.createdAt}}</p>
+    <p>{{order.updatedAt}}</p>
+    
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let item of order.items">
+          <ion-grid >
+            <ion-row>
+            {{item.name}}
+          </ion-row>
+          <ion-row>{{item.category.name}}</ion-row>
+          <ion-row>{{item.description}}</ion-row>
+            <ion-row>{{item.unitPrice}}</ion-row>
+            
+            
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    
+
+   
+    </div>
+    <div *ngIf="loadError" class="error">Error fetching data from api service. Check your internet connection or try again later.</div>
 </ion-content>

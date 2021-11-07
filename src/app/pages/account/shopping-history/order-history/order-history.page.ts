@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { Order } from 'src/app/interfaces/Order';
+import { DetailedOrder } from 'src/app/interfaces/DetailedOrder';
 import { OrderService } from 'src/app/services/order/order.service';
 
 @Component({
@@ -12,12 +12,12 @@ import { OrderService } from 'src/app/services/order/order.service';
 export class OrderHistoryPage implements OnInit {
 
   id: number;
-  order: Order;
+  order: DetailedOrder;
   loading: Promise<HTMLIonLoadingElement>;
   loadError: Boolean
 
   constructor(private route: ActivatedRoute, private orderService: OrderService, private loadingController: LoadingController) { 
-    this.order = {orderId: 0, total: '0', createdAt:'', updatedAt: ''}
+    this.order = {orderId: 0, total: '0', createdAt:'', updatedAt: '', items: JSON}
     this.loadError = false;
   }
 
@@ -29,8 +29,9 @@ export class OrderHistoryPage implements OnInit {
 
   
   getOrderHistory(){
-    this.orderService.getOrderById(this.id).then(async (order: Order) => {
-      this.order = order
+    this.orderService.getOrderById(this.id).then(async (order: DetailedOrder) => {
+      this.order = order[0]
+      console.log(order)
       this.loading.then(message => message.dismiss('loaded', 'ok'))
     }).catch(async() => this.loading.then(message => message.dismiss('not loaded', 'api timeout')));
   }
