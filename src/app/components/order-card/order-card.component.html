@@ -1,14 +1,13 @@
-<ion-card style="height: 100%;" [routerLink]="['/account/shopping-history', id]" class="ion-text-center">
-
-  <ion-card-header>
-    <ion-card-subtitle>{{orderId}}</ion-card-subtitle>
-    <ion-card-title>Cliente {{customerId}}</ion-card-title>
-  </ion-card-header>
-
-  <ion-card-content>
-    Precio total: {{total}}
-    Fecha de inicio: {{createdAt}}
-    Fecha de compra: {{updatedAt}}
-  </ion-card-content> 
-
-</ion-card>
+<ion-item  [routerLink]="['/account/shopping-history', id]">
+  <ion-thumbnail slot="start">
+    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+  </ion-thumbnail>
+  <ion-label>
+    <h3>Pedido nº{{id}}</h3>
+    <p>Comprado el: {{createdAt | date:'dd/MM/yyyy - hh:mm'}}</p>
+    <div *ngIf="createdAt != updatedAt">
+      <p>Modificado el: {{updatedAt | date:'dd/MM/yyyy - hh:mm'}}</p>
+    </div>
+    <p><strong>Total: </strong> EUR {{total}}</p>
+  </ion-label>
+</ion-item>
