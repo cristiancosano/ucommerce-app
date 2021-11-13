@@ -15,9 +15,12 @@ export class OrderService {
 
 
 
-  getOrders(customerId: number){
+  getOrders(){
     return new Promise(resolve => {
+        
         const token = this.userService.getToken();
+        const decodedToken= this.userService.getDecodedToken()
+        const customerId = decodedToken.customerId
         const params = new HttpParams().appendAll({token})
         console.log(token)
         console.log(this.host)

@@ -15,8 +15,8 @@ import { Variable } from '@angular/compiler/src/render3/r3_ast';
 export class CartPage implements OnInit {
   private productsCart: Array<ProductExtended>;
   private cart: Array<CartItem>;
-  private totalBuyPrice: Number;
-  private total: Number = 0;
+  private totalBuyPrice: number;
+  private total: number = 0;
   constructor(private productService: ProductService, private cartService: CartService) { }
 
   ngOnInit() {
@@ -45,15 +45,18 @@ export class CartPage implements OnInit {
   
     for (let x = 0 ; x < this.productsCart.length; x++ )
     {
-      this.total = Number(this.total) + Number((Number(this.productsCart[x].quantity) * Number(this.productsCart[x].unitPrice)))
-      console.log(Number(this.productsCart[x].quantity))
-      console.log(Number(this.productsCart[x].unitPrice))
-      console.log(Number(this.total))
-      console.log(Number(this.productsCart[x].quantity * this.productsCart[x].unitPrice))
-
+      this.total = this.total + (this.productsCart[x].quantity * this.productsCart[x].unitPrice)
+      
     }
     this.totalBuyPrice = this.total
     console.log(this.total)
+ }
+
+ updateCart = () => 
+ {
+   this.total = 0;
+  this.getCartUser()
+  this.getCartProducts()
  }
 
 }

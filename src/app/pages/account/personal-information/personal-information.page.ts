@@ -26,6 +26,7 @@ export class PersonalInformationPage implements OnInit {
 
   saveProfile(){
     this.userService.update(this.name, this.email, this.password, this.phone).then(data => console.log(data)).catch(error => console.log(error))
+    this.userService.logout()
   }
 
 }
