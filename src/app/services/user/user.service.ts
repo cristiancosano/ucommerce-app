@@ -31,11 +31,12 @@ export class UserService {
   update(name: string, email: string, password: string, phone: string ){
     return new Promise(resolve => {
       const token = this.getToken();
+      const decodedToken = this.getDecodedToken();
       const params = new HttpParams().appendAll({password, email,phone,name,token})
       const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
       console.log(params, headers)
 
-      this.http.put(this.host, params, {headers}).subscribe(data => resolve(data), error => console.log(error))
+      this.http.put(this.host+'/'+decodedToken.customerId, params, {headers}).subscribe(data => resolve(data), error => console.log(error))
     })
   }
   
