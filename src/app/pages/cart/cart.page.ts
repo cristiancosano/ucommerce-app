@@ -16,7 +16,7 @@ export class CartPage implements OnInit {
   private productsCart: Array<ProductExtended>;
   private cart: Array<CartItem>;
   private totalBuyPrice: Number;
-  private total: Number;
+  private total: Number = 0;
   constructor(private productService: ProductService, private cartService: CartService) { }
 
   ngOnInit() {
