@@ -16,7 +16,10 @@ export class CartService {
 
   private host = environment.apiHost + '/cart'
 
-  constructor(private http: HttpClient, private userService: UserService, private productService: ProductService, private product: ProductExtended, private cartItem : CartItem) { }
+  private product: ProductExtended;
+  private cartItem : CartItem;
+
+  constructor(private http: HttpClient, private userService: UserService, private productService: ProductService) { }
 
   getCartByCustomer(){
     const token = this.userService.getToken();
