@@ -9,11 +9,15 @@
 
 <ion-content>
   <div *ngIf="product.name !== ''">
-  <img src="https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg"/>
-  <h1>{{product.name}}</h1>
-  <p>{{product.description}}</p>
+    <img src="https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg"/>
+    <h1>{{product.name}}</h1>
+    <p>{{product.description}}</p>
 
-  <ion-button expand="block">Buy for {{product.unitPrice}}€</ion-button>
-  </div>
+  <ion-button expand="block" (click)="addCart()">Añadir al carrito</ion-button>
+          <ion-item>
+          <ion-label>Cantidad</ion-label>
+          <ion-input placeholder="Introduzca un número..." type="number" [(ngModel)]="quantity"></ion-input>
+        </ion-item>
+    </div>
   <div *ngIf="loadError" class="error">Error fetching data from api service. Check your internet connection or try again later.</div>
 </ion-content>

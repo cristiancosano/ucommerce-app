@@ -11,6 +11,7 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+
   getProducts(){
     return new Promise(resolve => {
       this.http.get(this.host).subscribe(data => resolve(data), error => console.log(error))

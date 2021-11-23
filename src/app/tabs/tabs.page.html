@@ -11,12 +11,15 @@
       <ion-label>Categories</ion-label>
     </ion-tab-button>
 
+    
     <ion-tab-button tab="cart" *ngIf="isAuth()">
       <ion-badge color="danger" *ngIf="numCartItems > 0">{{numCartItems}}</ion-badge>
       <ion-icon name="cart-outline"></ion-icon>
       <ion-label>Cart</ion-label>
     </ion-tab-button>
 
+    
+   
     <ion-tab-button tab="search">
       <ion-icon name="search-outline"></ion-icon>
       <ion-label>Search</ion-label>
