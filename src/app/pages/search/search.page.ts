@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
+import { NFC, Ndef } from '@ionic-native/nfc/ngx';
+
 
 @Component({
   selector: 'app-search',
@@ -11,7 +13,7 @@ export class SearchPage implements OnInit {
   private searchText: string;
   private products: any;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private nfc: NFC, private ndef: Ndef) { }
 
   ngOnInit() {
   }
@@ -22,6 +24,16 @@ export class SearchPage implements OnInit {
       this.productService.getProductsByText(this.searchText).then(products => {
         this.products = products
       })
+  }
+
+  async scanNfcTag(){
+    try {
+      let tag = await this.nfc.scanNdef();
+      console.log(JSON.stringify(tag));
+   } catch (err) {
+       console.log('Error reading tag', err);
+   }
+
   }
 
 }

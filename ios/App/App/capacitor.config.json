@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ucommerce-app",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

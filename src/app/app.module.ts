@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductService } from './services/product/product.service';
 import { CategoryService } from './services/category/category.service';
+import { NFC, Ndef } from "@ionic-native/nfc/ngx";
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ProductService, CategoryService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ProductService, CategoryService, NFC, Ndef],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
