@@ -6,6 +6,10 @@ import { Product } from 'src/app/interfaces/Product';
 import { ProductService } from 'src/app/services/product/product.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ProductExtended } from 'src/app/interfaces/ProductExtended';
+import { CartItem } from 'src/app/interfaces/CartItem';
+import { ThrowStmt } from '@angular/compiler';
+import { CartPage } from '../../cart/cart.page';
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.page.html',
@@ -15,36 +19,28 @@ export class ProductPage implements OnInit {
 
   id: number;
   product: Product;
+  cartItem : CartItem;
   productExtended: ProductExtended;
   loading: Promise<HTMLIonLoadingElement>;
   loadError: Boolean;
-  quantity: number
+  
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private loadingController: LoadingController, private cartService: CartService) { 
     this.product = {name: '', categoryId: 0, unitPrice: 0}
     this.loadError = false;
-    }
+   }
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
     this.presentLoading()
     this.getProduct()
-    //
-  }
+}
 
   addCart() {
-    this.productExtended = {
-      "productId":this.id,
-      "quantity":this.quantity,
-      "name":this.product.name,
-      "unitPrice":this.product.unitPrice,
-      "categoryId":this.product.categoryId
-    }
-    this.cartService.addProductToCart();
-    console.log("product: ", this.product)
+    this.cartService.addProductToCart(1,this.id);
   }
 
-    getProduct(){
+  getProduct(){
     this.productService.getProduct(this.id).then(async (product: Product) => {
       this.product = product
       this.loading.then(message => message.dismiss('loaded', 'ok'))

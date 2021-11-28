@@ -6,21 +6,44 @@
 <ion-button expand="block" (click)="updateCart()">Reload</ion-button>
 
 
-<ion-content>
+<ion-content *ngIf="loading == false">
   <ion-list>
-    <ion-item *ngFor="let item of selectedItems" lines="inset">
-     {{item.quantity}} x {{item.name}} - {{item.unitPrice}} €
-     <span slot="end"t> {{item.unitPrice * item.quantity}} € </span>
+    <ion-item *ngFor="let product of cart" class="ion-text-wrap">
+      <ion-grid>
+        <ion-row class="ion-aling-items-center">
+          <ion-col size="2" class="ion-aling-items-center">
+            <ion-button color="medium" fill="clear" (click)="bajarItemCarrito(productId)">
+              <ion-icon name="remove-circle" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-col>
+        
+          <ion-col size="1" class="ion-aling-items-center">
+            {{product.quantity}}
+          </ion-col>
+
+          <ion-col size="2" class="ion-aling-items-center">
+            <ion-button color="medium" fill="clear" (click)="aumentarItemCarrito(productId)">
+              <ion-icon name="add-circle" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-col>
+        
+          <ion-col>
+            <ion-button color="medium" fill="clear" (click)="remove()">
+              <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
-    <ion-item class="bold">
-      Total: <span slot="end"> {{total}} € </span>
+    <ion-item >
+      Total: <span slot="end">{{getTotal()}}€</span>
     </ion-item>
   </ion-list>
 
   <div class="center">
     <button ion-button class="button1" full round (click)="presentModal()" >Realizar Pedido</button>
     <!-- Falta hacer la funcion de realizar pedido. -->
-    <button ion-button class="button2" full round (click)="remove()" >Borrar carrito</button>
+    <button ion-button class="button2" full round (click)="deleteAllProductsOfCart()" >Borrar carrito</button>
   </div>
 
 </ion-content>

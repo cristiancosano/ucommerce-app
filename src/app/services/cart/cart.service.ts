@@ -12,8 +12,6 @@ import { ProductService } from '../product/product.service';
 })
 export class CartService {
 
-  private cart = [];
-
   private host = environment.apiHost + '/cart'
 
   private product: ProductExtended;
@@ -21,33 +19,31 @@ export class CartService {
 
   constructor(private http: HttpClient, private userService: UserService, private productService: ProductService) { }
 
-  getCartByCustomer(){
-    const token = this.userService.getToken();
-    const params = new HttpParams().appendAll({token})
-    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    return new Promise(resolve => {
-      this.http.get(this.host, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
-    })
+  // getCartByCustomer(){
+  //   const token = this.userService.getToken();
+  //   const params = new HttpParams().appendAll({token})
+  //   const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+  //   return new Promise(resolve => {
+  //     this.http.get(this.host, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
+  //   })
 
-  }
+  // }
   getCartProducts(){
      
     const token = this.userService.getToken();
     const params = new HttpParams().appendAll({token})
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    return new Promise(resolve => {
-      this.http.get(this.host + '/products', {headers,params}).subscribe(data => resolve(data), error => console.log(error))
+    return new Promise <Array<CartItem>>(resolve => {
+      this.http.get(this.host + '/products', {headers,params}).subscribe((data:Array<CartItem>) => resolve(data), error => console.log(error))
     })
   }
 
-  addProductToCart(){
+  addProductToCart(quantity: number, productId: number){
     const token = this.userService.getToken();
-    const quantity = this.cartItem.quantity;
-    const productId = this.cartItem.productId;
     const params = new HttpParams().appendAll({token,quantity,productId});
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return new Promise(resolve => {
-      this.http.post(this.host, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
+      this.http.post(this.host, params, {headers}).subscribe(data => resolve(data), error => console.log(error))
     })
   }
 
@@ -56,16 +52,16 @@ export class CartService {
     const params = new HttpParams().appendAll({token})
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return new Promise(resolve => {
-      this.http.delete(this.host + productId, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
+      this.http.delete(this.host + `/${productId}`, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
     })
   }
 
   removeCart(){
     const token = this.userService.getToken();
-    const params = new HttpParams().appendAll({token})
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const params = new HttpParams().appendAll({token})
     return new Promise(resolve => {
-      this.http.delete(this.host, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
+      this.http.delete(this.host,{headers,params}).subscribe(data => resolve(data), error => console.log(error))
     })
   }
 
@@ -76,7 +72,7 @@ export class CartService {
     const params = new HttpParams().appendAll({token,quantity,productId});
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return new Promise(resolve => {
-      this.http.put(this.host, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
+      this.http.put(this.host,params, {headers}).subscribe(data => resolve(data), error => console.log(error))
     })
   }
 }

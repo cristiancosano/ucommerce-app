@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Product } from 'src/app/interfaces/Product';
 import { ActivatedRoute } from '@angular/router';
 import { ProductExtended } from 'src/app/interfaces/ProductExtended';
@@ -19,60 +19,75 @@ export class CartPage implements OnInit {
   selectedItems = [];
   total = 0;
   productId : number
-  private productsCart: Array<ProductExtended>;
-  private cart: Array<CartItem>;
+  private cart: any
+  loading : Boolean
   private totalBuyPrice: number;
-  constructor(private route: ActivatedRoute, private productService: ProductService, private cartService: CartService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private productService: ProductService, private cartService: CartService, private router: Router) {}
 
   ngOnInit() {
     this.productId = Number(this.route.snapshot.paramMap.get('id'));
-    this.getCartUser();
-    this.getCartProducts()
-    let items = this.productsCart;
-    let selected = {};
+    // this.getCartUser();
+    this.getCartProducts();
+    //console.log(this.cart)
+    this.updateCart();
+  }
 
-    for(let obj of items){
-      selected[obj.productId] = {...obj, count: 1};
-    }
-
-    this.selectedItems = Object.keys(selected).map(key => selected[key])
-    this.total = this.selectedItems.reduce((a, b) => a + (b.quantity * b.unitPrice), 0);
+  deleteAllProductsOfCart(){
+    this.cartService.removeCart();
+    this.getTotal();
+    this.updateCart();
   }
 
   remove(){
     this.cartService.removeProductOfCart(this.productId);//
-    this.router.navigate(["/products"]);
+    //this.router.navigate(["/products"]);
+    this.updateCart();
   }
 
-  getCartUser = () => {
-    this.cartService.getCartByCustomer().then((data: Array<CartItem>) => {
+  // getCartUser = () => {
+  //   this.cartService.getCartByCustomer().then((data: Array<CartItem>) => {
+  //     this.cart = data
+  //     console.log(data)
+  //   })
+  // }
+
+  getCartProducts() {
+    this.loading=true
+    this.cartService.getCartProducts().then((data: Array<CartItem>)=> {
       this.cart = data
-      console.log(data)
-    })
-  }
-  getCartProducts = () => {
-    this.cartService.getCartProducts().then((data: Array<ProductExtended>) => {
-      this.productsCart = data
-      this.updateTotalPrice()
-    })
+      this.loading=false
+     })
+    }
+    
+  aumentarItemCarrito(productId: number){
+    for(let product of this.cart|| []){
+      if(product.productId==productId){
+        product.quantity=product.quantity+1
+      }
+    }
+    this.updateCart();
   }
 
-  updateTotalPrice = () => {
-    
-  
-    for (let x = 0 ; x < this.productsCart.length; x++ )
-    {
-      this.total = this.total + (this.productsCart[x].quantity * this.productsCart[x].unitPrice)
-      
+  bajarItemCarrito(productId:number){
+    for(let product of this.cart|| []){
+      if(product.productId==productId){
+        product.quantity=product.quantity-1
+      }
     }
-    this.totalBuyPrice = this.total
-    console.log(this.total)
- }
+    this.updateCart();
+  }
+  
+  getTotal = () => {
+    let total=0;  
+      for (let product of this.cart|| [])
+      total += product.quantity * product.unitPrice
+    return total;
+  }
 
  updateCart = () => 
  {
    this.total = 0;
-  this.getCartUser()
+  // this.getCartUser()
   this.getCartProducts()
  }
 

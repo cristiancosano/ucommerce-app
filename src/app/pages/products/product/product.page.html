@@ -14,10 +14,7 @@
     <p>{{product.description}}</p>
 
   <ion-button expand="block" (click)="addCart()">Añadir al carrito</ion-button>
-          <ion-item>
-          <ion-label>Cantidad</ion-label>
-          <ion-input placeholder="Introduzca un número..." type="number" [(ngModel)]="quantity"></ion-input>
-        </ion-item>
+          
     </div>
   <div *ngIf="loadError" class="error">Error fetching data from api service. Check your internet connection or try again later.</div>
 </ion-content>
