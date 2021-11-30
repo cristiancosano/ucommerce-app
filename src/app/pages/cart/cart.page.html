@@ -6,32 +6,43 @@
 
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let product of cart.products" class="ion-text-wrap">
-      <ion-grid>
-        <ion-row class="ion-aling-items-center">
-          <ion-col size="1" class="ion-aling-items-center">
-            <ion-select interface="popover" value="{{product.quantity}}" (ionChange)="updateItemUnits($event.detail.value, product.productId)">
-              <ion-select-option value="{{i}}"  *ngFor="let item of [].constructor(10); let i = index">
-                {{i}}
-                <span *ngIf="i==0">(eliminar)</span>
-              </ion-select-option>
+  <div *ngIf="cart.items.length > 0; else noItems">
+    <ion-list>
+      <ion-item *ngFor="let item of cart.items" class="ion-text-wrap">
+        <ion-grid>
+          <ion-row class="ion-aling-items-center">
+            <ion-col size="1" class="ion-aling-items-center">
+              <ion-select interface="popover" value="{{item.quantity}}" (ionChange)="updateItemUnits($event.detail.value, item.productId)">
+                <ion-select-option value="{{i}}"  *ngFor="let element of [].constructor(10); let i = index">
+                  {{i}}
+                  <span *ngIf="i==0">(eliminar)</span>
+                </ion-select-option>
 
-            </ion-select>
-          </ion-col>
-          <ion-col>
-            {{product.name}}
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-    <ion-item >
-      Total: <span slot="end">{{getTotal()}} €</span>
-    </ion-item>
-  </ion-list>
+              </ion-select>
+            </ion-col>
+            <ion-col>
+              {{item.name}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item >
+        Total: <span slot="end">{{getTotal()}} €</span>
+      </ion-item>
+    </ion-list>
 
-  <div class="center">
-    <ion-button class="button1" expand="block" (click)="presentModal()" >Realizar Pedido</ion-button>
+    <div class="center">
+      <ion-button expand="block">Realizar Pedido</ion-button>
+    </div>
   </div>
+
+  <ng-template #noItems>
+    <div class="full-height">
+      <div class="vertical-align-middle">
+        <img src="assets/images/shopping-cart.png" alt="Shopping Cart" width="50%" id="shopping-cart-image">
+        <p class="text-center">There are no items in the cart. Add first someone product.</p>
+      </div>
+    </div>
+  </ng-template>
 
 </ion-content>

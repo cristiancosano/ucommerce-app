@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CartItem } from '../interfaces/CartItem';
+import { CartService } from '../services/cart/cart.service';
 import { UserService } from '../services/user/user.service';
 
 @Component({
@@ -8,14 +10,14 @@ import { UserService } from '../services/user/user.service';
 })
 export class TabsPage {
 
-  private numCartItems: number
+  private cart: {items: CartItem[]}
 
-  constructor(private userService: UserService) {
-    this.numCartItems = 0
+  constructor(private userService: UserService, private cartService: CartService) {
+    this.cart = {items: []}
+    this.getCart()
   }
 
   isAuth = () => this.userService.isAuth()
-
-  //TODO: Obtener del servicio de carrito el numero de articulos que hay en la cesta y setearlo en numCartItems.
-
+  getCart = async () => this.cart = await this.cartService.getCart() 
+  
 }

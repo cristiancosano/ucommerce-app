@@ -7,8 +7,8 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ProductExtended } from 'src/app/interfaces/ProductExtended';
 import { CartItem } from 'src/app/interfaces/CartItem';
-import { ThrowStmt } from '@angular/compiler';
-import { CartPage } from '../../cart/cart.page';
+import { ToastController } from '@ionic/angular';
+import { present } from '@ionic/core/dist/types/utils/overlays';
 
 @Component({
   selector: 'app-product',
@@ -25,7 +25,7 @@ export class ProductPage implements OnInit {
   loadError: Boolean;
   
 
-  constructor(private route: ActivatedRoute, private productService: ProductService, private loadingController: LoadingController, private cartService: CartService) { 
+  constructor(private route: ActivatedRoute, private productService: ProductService, private loadingController: LoadingController, private cartService: CartService, private toastController: ToastController) { 
     this.product = {name: '', categoryId: 0, unitPrice: 0}
     this.loadError = false;
    }
@@ -34,10 +34,25 @@ export class ProductPage implements OnInit {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
     this.presentLoading()
     this.getProduct()
-}
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'top'
+    });
+    await toast.present();
+  }
 
   addCart() {
-    this.cartService.addItem(1, this.id);
+    this.cartService.addItem(1, this.id)
+      .then(() => {
+        this.presentToast('Item succesfully added to your cart!')
+      })
+      .catch(() => {
+        this.presentToast('There was a problem adding the item. It may already be in the cart or the connection failed.')
+      });
   }
 
   getProduct(){

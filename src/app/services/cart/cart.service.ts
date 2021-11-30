@@ -15,14 +15,14 @@ export class CartService {
   private host = environment.apiHost + '/cart'
 
   private product: ProductExtended;
-  private cart: {products: Array<CartItem>}
+  private cart: {items: Array<CartItem>}
 
   constructor(private http: HttpClient, private userService: UserService, private productService: ProductService) {
-   this.cart = {products: []}
+   this.cart = {items: []}
   }
 
   async getCart(){
-    this.cart.products = await this.getProducts()
+    this.cart.items = await this.getProducts()
     return this.cart
   }
 
@@ -39,8 +39,8 @@ export class CartService {
     const token = this.userService.getToken();
     const params = new HttpParams().appendAll({token,quantity,productId});
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    return new Promise(resolve => {
-      this.http.post(this.host, params, {headers}).subscribe(data => {this.getCart(); resolve(data);}, error => console.log(error))
+    return new Promise((resolve, reject) => {
+      this.http.post(this.host, params, {headers}).subscribe(data => {this.getCart(); resolve(data);}, error => reject(error))
     })
   }
 

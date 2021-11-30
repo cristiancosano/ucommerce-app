@@ -1,0 +1,17 @@
+.text-center{
+    text-align: center;
+}
+
+.full-height{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#shopping-cart-image{
+    width: 50%;
+    margin: 5% auto;
+    display: block;
+    filter: grayscale(50%) opacity(40%);
+}

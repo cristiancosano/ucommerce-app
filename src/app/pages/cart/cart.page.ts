@@ -12,24 +12,22 @@ import { Router } from '@angular/router';
 })
 export class CartPage implements OnInit {
 
-  private cart: {products: Array<CartItem>};
+  private cart: {items: Array<CartItem>};
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private cartService: CartService, private router: Router) {
-    this.cart = {products: []}    
+    this.cart = {items: []}    
   }
 
   ngOnInit() {
-    this.getProducts();
+    this.getItems();
   }
 
   removeItem(productId: number){
     this.cartService.removeItem(productId);
   }
 
-  getProducts() {
-    this.cartService.getCart().then(cart =>  {
-      this.cart = cart
-    })
+  getItems() {
+    this.cartService.getCart().then(cart =>  this.cart = cart)
   }
     
   updateItemUnits(quantity: number, productId: number){
@@ -39,7 +37,7 @@ export class CartPage implements OnInit {
   
   getTotal(){
     let total = 0;  
-      for (let product of this.cart.products)
+      for (let product of this.cart.items)
         total += product.quantity * product.unitPrice
     return total.toFixed(2);
   }
