@@ -11,8 +11,8 @@
       <ion-item *ngFor="let item of cart.items" class="ion-text-wrap">
         <ion-grid>
           <ion-row class="ion-aling-items-center">
-            <ion-col size="1" class="ion-aling-items-center">
-              <ion-select interface="popover" value="{{item.quantity}}" (ionChange)="updateItemUnits($event.detail.value, item.productId)">
+            <ion-col size-xs="5" size-sm="3" size-md="2" class="ion-align-items-center">
+              <ion-select style="margin: 0" interface="popover" value="{{item.quantity}}" (ionChange)="updateItemUnits($event.detail.value, item.productId)">
                 <ion-select-option value="{{i}}"  *ngFor="let element of [].constructor(10); let i = index">
                   {{i}}
                   <span *ngIf="i==0">(eliminar)</span>
@@ -20,7 +20,7 @@
 
               </ion-select>
             </ion-col>
-            <ion-col>
+            <ion-col size-xs="7" size-sm="9" size-md="10">
               {{item.name}}
             </ion-col>
           </ion-row>
