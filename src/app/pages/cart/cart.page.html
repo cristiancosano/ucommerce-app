@@ -3,47 +3,35 @@
     <ion-title>Carrito</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-button expand="block" (click)="updateCart()">Reload</ion-button>
 
 
-<ion-content *ngIf="loading == false">
+<ion-content>
   <ion-list>
-    <ion-item *ngFor="let product of cart" class="ion-text-wrap">
+    <ion-item *ngFor="let product of cart.products" class="ion-text-wrap">
       <ion-grid>
         <ion-row class="ion-aling-items-center">
-          <ion-col size="2" class="ion-aling-items-center">
-            <ion-button color="medium" fill="clear" (click)="bajarItemCarrito(productId)">
-              <ion-icon name="remove-circle" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-        
           <ion-col size="1" class="ion-aling-items-center">
-            {{product.quantity}}
-          </ion-col>
+            <ion-select interface="popover" value="{{product.quantity}}" (ionChange)="updateItemUnits($event.detail.value, product.productId)">
+              <ion-select-option value="{{i}}"  *ngFor="let item of [].constructor(10); let i = index">
+                {{i}}
+                <span *ngIf="i==0">(eliminar)</span>
+              </ion-select-option>
 
-          <ion-col size="2" class="ion-aling-items-center">
-            <ion-button color="medium" fill="clear" (click)="aumentarItemCarrito(productId)">
-              <ion-icon name="add-circle" slot="icon-only"></ion-icon>
-            </ion-button>
+            </ion-select>
           </ion-col>
-        
           <ion-col>
-            <ion-button color="medium" fill="clear" (click)="remove()">
-              <ion-icon name="close-circle" slot="icon-only"></ion-icon>
-            </ion-button>
+            {{product.name}}
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
     <ion-item >
-      Total: <span slot="end">{{getTotal()}}€</span>
+      Total: <span slot="end">{{getTotal()}} €</span>
     </ion-item>
   </ion-list>
 
   <div class="center">
-    <button ion-button class="button1" full round (click)="presentModal()" >Realizar Pedido</button>
-    <!-- Falta hacer la funcion de realizar pedido. -->
-    <button ion-button class="button2" full round (click)="deleteAllProductsOfCart()" >Borrar carrito</button>
+    <ion-button class="button1" expand="block" (click)="presentModal()" >Realizar Pedido</ion-button>
   </div>
 
 </ion-content>

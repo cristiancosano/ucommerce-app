@@ -37,7 +37,7 @@ export class ProductPage implements OnInit {
 }
 
   addCart() {
-    this.cartService.addProductToCart(1,this.id);
+    this.cartService.addItem(1, this.id);
   }
 
   getProduct(){

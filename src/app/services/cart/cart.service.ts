@@ -15,21 +15,18 @@ export class CartService {
   private host = environment.apiHost + '/cart'
 
   private product: ProductExtended;
-  private cartItem : CartItem;
+  private cart: {products: Array<CartItem>}
 
-  constructor(private http: HttpClient, private userService: UserService, private productService: ProductService) { }
+  constructor(private http: HttpClient, private userService: UserService, private productService: ProductService) {
+   this.cart = {products: []}
+  }
 
-  // getCartByCustomer(){
-  //   const token = this.userService.getToken();
-  //   const params = new HttpParams().appendAll({token})
-  //   const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-  //   return new Promise(resolve => {
-  //     this.http.get(this.host, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
-  //   })
+  async getCart(){
+    this.cart.products = await this.getProducts()
+    return this.cart
+  }
 
-  // }
-  getCartProducts(){
-     
+  getProducts(){
     const token = this.userService.getToken();
     const params = new HttpParams().appendAll({token})
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
@@ -38,41 +35,30 @@ export class CartService {
     })
   }
 
-  addProductToCart(quantity: number, productId: number){
+  addItem(quantity: number, productId: number){
     const token = this.userService.getToken();
     const params = new HttpParams().appendAll({token,quantity,productId});
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return new Promise(resolve => {
-      this.http.post(this.host, params, {headers}).subscribe(data => resolve(data), error => console.log(error))
+      this.http.post(this.host, params, {headers}).subscribe(data => {this.getCart(); resolve(data);}, error => console.log(error))
     })
   }
 
-  removeProductOfCart(productId: number){
+  removeItem(productId: number){
     const token = this.userService.getToken();
     const params = new HttpParams().appendAll({token})
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return new Promise(resolve => {
-      this.http.delete(this.host + `/${productId}`, {headers,params}).subscribe(data => resolve(data), error => console.log(error))
+      this.http.delete(this.host + `/${productId}`, {headers,params}).subscribe(data => {this.getCart(); resolve(data)}, error => console.log(error))
     })
   }
 
-  removeCart(){
+  updateItem(quantity: number, productId: number){
     const token = this.userService.getToken();
-    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    const params = new HttpParams().appendAll({token})
-    return new Promise(resolve => {
-      this.http.delete(this.host,{headers,params}).subscribe(data => resolve(data), error => console.log(error))
-    })
-  }
-
-  updateItemCart(){
-    const token = this.userService.getToken();
-    const quantity = this.cartItem.quantity;
-    const productId = this.cartItem.productId;
-    const params = new HttpParams().appendAll({token,quantity,productId});
+    const params = new HttpParams().appendAll({token, quantity, productId});
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return new Promise(resolve => {
-      this.http.put(this.host,params, {headers}).subscribe(data => resolve(data), error => console.log(error))
+      this.http.put(this.host,params, {headers}).subscribe(data => {this.getCart(); resolve(data)}, error => console.log(error))
     })
   }
 }
