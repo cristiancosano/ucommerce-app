@@ -9,6 +9,7 @@ import { ProductExtended } from 'src/app/interfaces/ProductExtended';
 import { CartItem } from 'src/app/interfaces/CartItem';
 import { ToastController } from '@ionic/angular';
 import { present } from '@ionic/core/dist/types/utils/overlays';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-product',
@@ -25,7 +26,7 @@ export class ProductPage implements OnInit {
   loadError: Boolean;
   
 
-  constructor(private route: ActivatedRoute, private productService: ProductService, private loadingController: LoadingController, private cartService: CartService, private toastController: ToastController) { 
+  constructor(private route: ActivatedRoute, private userService: UserService, private productService: ProductService, private loadingController: LoadingController, private cartService: CartService, private toastController: ToastController) { 
     this.product = {name: '', categoryId: 0, unitPrice: 0}
     this.loadError = false;
    }
@@ -62,6 +63,8 @@ export class ProductPage implements OnInit {
     }).catch(async() => this.loading.then(message => message.dismiss('not loaded', 'api timeout')));
   }
 
+  isAuth = () => this.userService.isAuth()
+
   async presentLoading() {
     this.loading = this.loadingController.create({
       cssClass: 'my-custom-class',
@@ -76,5 +79,4 @@ export class ProductPage implements OnInit {
       }
     })
   }
-
 }

@@ -53,6 +53,15 @@ export class CartService {
     })
   }
 
+  removeItems(){
+    const token = this.userService.getToken();
+    const params = new HttpParams().appendAll({token})
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    return new Promise(resolve => {
+      this.http.delete(this.host, {headers,params}).subscribe(data => {this.getCart(); resolve(data)}, error => console.log(error))
+    })
+  }
+
   updateItem(quantity: number, productId: number){
     const token = this.userService.getToken();
     const params = new HttpParams().appendAll({token, quantity, productId});

@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { CartItem } from 'src/app/interfaces/CartItem';
 import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
@@ -24,6 +25,10 @@ export class CartPage implements OnInit {
 
   removeItem(productId: number){
     this.cartService.removeItem(productId);
+  }
+
+  removeItems(){
+    this.cartService.removeItems();
   }
 
   getItems() {
