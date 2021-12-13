@@ -978,7 +978,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! tslib */
       61855);
       /* harmony import */
@@ -996,19 +996,19 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/core */
       42741);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/router */
       29535);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @ionic/angular */
       34595);
       /* harmony import */
@@ -1023,15 +1023,30 @@
       var src_app_services_cart_cart_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! src/app/services/cart/cart.service */
       20053);
+      /* harmony import */
+
+
+      var src_app_services_user_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/services/user/user.service */
+      33626);
 
       var _ProductPage = /*#__PURE__*/function () {
-        function ProductPage(route, productService, loadingController, cartService) {
+        function ProductPage(route, userService, productService, loadingController, cartService, toastController) {
+          var _this = this;
+
           _classCallCheck(this, ProductPage);
 
           this.route = route;
+          this.userService = userService;
           this.productService = productService;
           this.loadingController = loadingController;
           this.cartService = cartService;
+          this.toastController = toastController;
+
+          this.isAuth = function () {
+            return _this.userService.isAuth();
+          };
+
           this.product = {
             name: '',
             categoryId: 0,
@@ -1045,31 +1060,58 @@
           value: function ngOnInit() {
             this.id = Number(this.route.snapshot.paramMap.get('id'));
             this.presentLoading();
-            this.getProduct(); //
+            this.getProduct();
+          }
+        }, {
+          key: "presentToast",
+          value: function presentToast(message) {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+              var toast;
+              return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                while (1) {
+                  switch (_context3.prev = _context3.next) {
+                    case 0:
+                      _context3.next = 2;
+                      return this.toastController.create({
+                        message: message,
+                        duration: 2000,
+                        position: 'top'
+                      });
+
+                    case 2:
+                      toast = _context3.sent;
+                      _context3.next = 5;
+                      return toast.present();
+
+                    case 5:
+                    case "end":
+                      return _context3.stop();
+                  }
+                }
+              }, _callee3, this);
+            }));
           }
         }, {
           key: "addCart",
           value: function addCart() {
-            this.productExtended = {
-              "productId": this.id,
-              "quantity": this.quantity,
-              "name": this.product.name,
-              "unitPrice": this.product.unitPrice,
-              "categoryId": this.product.categoryId
-            };
-            this.cartService.addProductToCart();
-            console.log("product: ", this.product);
+            var _this2 = this;
+
+            this.cartService.addItem(1, this.id).then(function () {
+              _this2.presentToast('Item succesfully added to your cart!');
+            })["catch"](function () {
+              _this2.presentToast('There was a problem adding the item. It may already be in the cart or the connection failed.');
+            });
           }
         }, {
           key: "getProduct",
           value: function getProduct() {
-            var _this = this;
+            var _this3 = this;
 
             this.productService.getProduct(this.id).then(function (product) {
-              return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+              return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(_this3, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+                return regeneratorRuntime.wrap(function _callee4$(_context4) {
                   while (1) {
-                    switch (_context3.prev = _context3.next) {
+                    switch (_context4.prev = _context4.next) {
                       case 0:
                         this.product = product;
                         this.loading.then(function (message) {
@@ -1078,39 +1120,39 @@
 
                       case 2:
                       case "end":
-                        return _context3.stop();
+                        return _context4.stop();
                     }
                   }
-                }, _callee3, this);
+                }, _callee4, this);
               }));
             })["catch"](function () {
-              return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+              return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(_this3, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+                return regeneratorRuntime.wrap(function _callee5$(_context5) {
                   while (1) {
-                    switch (_context4.prev = _context4.next) {
+                    switch (_context5.prev = _context5.next) {
                       case 0:
-                        return _context4.abrupt("return", this.loading.then(function (message) {
+                        return _context5.abrupt("return", this.loading.then(function (message) {
                           return message.dismiss('not loaded', 'api timeout');
                         }));
 
                       case 1:
                       case "end":
-                        return _context4.stop();
+                        return _context5.stop();
                     }
                   }
-                }, _callee4, this);
+                }, _callee5, this);
               }));
             });
           }
         }, {
           key: "presentLoading",
           value: function presentLoading() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
-              var _this2 = this;
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+              var _this4 = this;
 
-              return regeneratorRuntime.wrap(function _callee6$(_context6) {
+              return regeneratorRuntime.wrap(function _callee7$(_context7) {
                 while (1) {
-                  switch (_context6.prev = _context6.next) {
+                  switch (_context7.prev = _context7.next) {
                     case 0:
                       this.loading = this.loadingController.create({
                         cssClass: 'my-custom-class',
@@ -1118,19 +1160,19 @@
                         backdropDismiss: false
                       });
                       this.loading.then(function (message) {
-                        return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(_this2, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+                        return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(_this4, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
                           var _yield$message$onDidD, data, role;
 
-                          return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                          return regeneratorRuntime.wrap(function _callee6$(_context6) {
                             while (1) {
-                              switch (_context5.prev = _context5.next) {
+                              switch (_context6.prev = _context6.next) {
                                 case 0:
                                   message.present();
-                                  _context5.next = 3;
+                                  _context6.next = 3;
                                   return message.onDidDismiss();
 
                                 case 3:
-                                  _yield$message$onDidD = _context5.sent;
+                                  _yield$message$onDidD = _context6.sent;
                                   data = _yield$message$onDidD.data;
                                   role = _yield$message$onDidD.role;
 
@@ -1140,19 +1182,19 @@
 
                                 case 7:
                                 case "end":
-                                  return _context5.stop();
+                                  return _context6.stop();
                               }
                             }
-                          }, _callee5, this);
+                          }, _callee6, this);
                         }));
                       });
 
                     case 2:
                     case "end":
-                      return _context6.stop();
+                      return _context7.stop();
                   }
                 }
-              }, _callee6, this);
+              }, _callee7, this);
             }));
           }
         }]);
@@ -1162,249 +1204,25 @@
 
       _ProductPage.ctorParameters = function () {
         return [{
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute
+        }, {
+          type: src_app_services_user_user_service__WEBPACK_IMPORTED_MODULE_4__.UserService
         }, {
           type: src_app_services_product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.LoadingController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.LoadingController
         }, {
           type: src_app_services_cart_cart_service__WEBPACK_IMPORTED_MODULE_3__.CartService
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ToastController
         }];
       };
 
-      _ProductPage = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+      _ProductPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-product',
         template: _raw_loader_product_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_product_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
       })], _ProductPage);
-      /***/
-    },
-
-    /***/
-    20053:
-    /*!***********************************************!*\
-      !*** ./src/app/services/cart/cart.service.ts ***!
-      \***********************************************/
-
-    /***/
-    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export */
-
-
-      __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */
-        "CartService": function CartService() {
-          return (
-            /* binding */
-            _CartService
-          );
-        }
-        /* harmony export */
-
-      });
-      /* harmony import */
-
-
-      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-      /*! tslib */
-      61855);
-      /* harmony import */
-
-
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! @angular/common/http */
-      31887);
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-      /*! @angular/core */
-      42741);
-      /* harmony import */
-
-
-      var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! src/environments/environment */
-      24766);
-      /* harmony import */
-
-
-      var _user_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-      /*! ../user/user.service */
-      33626);
-      /* harmony import */
-
-
-      var _product_product_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ../product/product.service */
-      53845);
-
-      var _CartService = /*#__PURE__*/function () {
-        function CartService(http, userService, productService) {
-          _classCallCheck(this, CartService);
-
-          this.http = http;
-          this.userService = userService;
-          this.productService = productService;
-          this.cart = [];
-          this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiHost + '/cart';
-        }
-
-        _createClass(CartService, [{
-          key: "getCartByCustomer",
-          value: function getCartByCustomer() {
-            var _this3 = this;
-
-            var token = this.userService.getToken();
-            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({
-              token: token
-            });
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-            return new Promise(function (resolve) {
-              _this3.http.get(_this3.host, {
-                headers: headers,
-                params: params
-              }).subscribe(function (data) {
-                return resolve(data);
-              }, function (error) {
-                return console.log(error);
-              });
-            });
-          }
-        }, {
-          key: "getCartProducts",
-          value: function getCartProducts() {
-            var _this4 = this;
-
-            var token = this.userService.getToken();
-            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({
-              token: token
-            });
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-            return new Promise(function (resolve) {
-              _this4.http.get(_this4.host + '/products', {
-                headers: headers,
-                params: params
-              }).subscribe(function (data) {
-                return resolve(data);
-              }, function (error) {
-                return console.log(error);
-              });
-            });
-          }
-        }, {
-          key: "addProductToCart",
-          value: function addProductToCart() {
-            var _this5 = this;
-
-            var token = this.userService.getToken();
-            var quantity = this.cartItem.quantity;
-            var productId = this.cartItem.productId;
-            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({
-              token: token,
-              quantity: quantity,
-              productId: productId
-            });
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-            return new Promise(function (resolve) {
-              _this5.http.post(_this5.host, {
-                headers: headers,
-                params: params
-              }).subscribe(function (data) {
-                return resolve(data);
-              }, function (error) {
-                return console.log(error);
-              });
-            });
-          }
-        }, {
-          key: "removeProductOfCart",
-          value: function removeProductOfCart(productId) {
-            var _this6 = this;
-
-            var token = this.userService.getToken();
-            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({
-              token: token
-            });
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-            return new Promise(function (resolve) {
-              _this6.http["delete"](_this6.host + productId, {
-                headers: headers,
-                params: params
-              }).subscribe(function (data) {
-                return resolve(data);
-              }, function (error) {
-                return console.log(error);
-              });
-            });
-          }
-        }, {
-          key: "removeCart",
-          value: function removeCart() {
-            var _this7 = this;
-
-            var token = this.userService.getToken();
-            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({
-              token: token
-            });
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-            return new Promise(function (resolve) {
-              _this7.http["delete"](_this7.host, {
-                headers: headers,
-                params: params
-              }).subscribe(function (data) {
-                return resolve(data);
-              }, function (error) {
-                return console.log(error);
-              });
-            });
-          }
-        }, {
-          key: "updateItemCart",
-          value: function updateItemCart() {
-            var _this8 = this;
-
-            var token = this.userService.getToken();
-            var quantity = this.cartItem.quantity;
-            var productId = this.cartItem.productId;
-            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({
-              token: token,
-              quantity: quantity,
-              productId: productId
-            });
-            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-            return new Promise(function (resolve) {
-              _this8.http.put(_this8.host, {
-                headers: headers,
-                params: params
-              }).subscribe(function (data) {
-                return resolve(data);
-              }, function (error) {
-                return console.log(error);
-              });
-            });
-          }
-        }]);
-
-        return CartService;
-      }();
-
-      _CartService.ctorParameters = function () {
-        return [{
-          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpClient
-        }, {
-          type: _user_user_service__WEBPACK_IMPORTED_MODULE_1__.UserService
-        }, {
-          type: _product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService
-        }];
-      };
-
-      _CartService = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.Injectable)({
-        providedIn: 'root'
-      })], _CartService);
       /***/
     },
 
@@ -1440,7 +1258,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "img {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n  height: 50%;\n  border-radius: 10px;\n  margin-top: 2.5em;\n}\n\nh1 {\n  text-align: center;\n}\n\n.error {\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.151);\n  font-size: 24px;\n  font-style: oblique;\n  text-align: center;\n  display: flex;\n  justify-content: center;\n  /* align horizontal */\n  align-items: center;\n  /* align vertical */\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb2R1Y3QucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDRixXQUFBO0VBQ0EsZ0NBQUE7RUFDQSxlQUFBO0VBQ0EsbUJBQUE7RUFDQSxrQkFBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLHFCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtBQUNGIiwiZmlsZSI6InByb2R1Y3QucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBtYXJnaW4tbGVmdDogYXV0bztcbiAgICBtYXJnaW4tcmlnaHQ6IGF1dG87XG4gICAgaGVpZ2h0OiA1MCU7XG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgICBtYXJnaW4tdG9wOiAyLjVlbTtcbn1cblxuaDF7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uZXJyb3J7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICB3aWR0aDogMTAwJTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjE1MSk7XG4gIGZvbnQtc2l6ZTogMjRweDtcbiAgZm9udC1zdHlsZTogb2JsaXF1ZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgLyogYWxpZ24gaG9yaXpvbnRhbCAqL1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAvKiBhbGlnbiB2ZXJ0aWNhbCAqL1xufVxuXG4iXX0= */";
+      __webpack_exports__["default"] = "img {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n  height: 50%;\n  border-radius: 10px;\n  margin-top: 2.5em;\n}\n\nh1 {\n  text-align: center;\n}\n\n.error {\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.151);\n  font-size: 24px;\n  font-style: oblique;\n  text-align: center;\n  display: flex;\n  justify-content: center;\n  /* align horizontal */\n  align-items: center;\n  /* align vertical */\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb2R1Y3QucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDRixXQUFBO0VBQ0EsZ0NBQUE7RUFDQSxlQUFBO0VBQ0EsbUJBQUE7RUFDQSxrQkFBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLHFCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtBQUNGIiwiZmlsZSI6InByb2R1Y3QucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcclxuICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgbWFyZ2luLWxlZnQ6IGF1dG87XHJcbiAgICBtYXJnaW4tcmlnaHQ6IGF1dG87XHJcbiAgICBoZWlnaHQ6IDUwJTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICBtYXJnaW4tdG9wOiAyLjVlbTtcclxufVxyXG5cclxuaDF7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuXHJcbi5lcnJvcntcclxuICAgIGhlaWdodDogMTAwJTtcclxuICB3aWR0aDogMTAwJTtcclxuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuMTUxKTtcclxuICBmb250LXNpemU6IDI0cHg7XHJcbiAgZm9udC1zdHlsZTogb2JsaXF1ZTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAvKiBhbGlnbiBob3Jpem9udGFsICovXHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAvKiBhbGlnbiB2ZXJ0aWNhbCAqL1xyXG59XHJcblxyXG4iXX0= */";
       /***/
     },
 
@@ -1458,7 +1276,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-card [routerLink]=\"['/products', id]\">\n  <img src=\"{{image}}\"/>\n  <ion-card-header>\n    <ion-card-subtitle>{{name}}</ion-card-subtitle>\n    <ion-card-title>{{price}}€</ion-card-title>\n  </ion-card-header>\n\n  <ion-card-content>\n    {{(description.length > 144) ?  (description | slice:0:144)+'...' : description}}\n  </ion-card-content> \n\n</ion-card>";
+      __webpack_exports__["default"] = "<ion-card [routerLink]=\"['/products', id]\">\r\n  <img src=\"{{image}}\"/>\r\n  <ion-card-header>\r\n    <ion-card-subtitle>{{name}}</ion-card-subtitle>\r\n    <ion-card-title>{{price}}€</ion-card-title>\r\n  </ion-card-header>\r\n\r\n  <ion-card-content>\r\n    {{(description.length > 144) ?  (description | slice:0:144)+'...' : description}}\r\n  </ion-card-content> \r\n\r\n</ion-card>";
       /***/
     },
 
@@ -1476,7 +1294,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{product.name || 'Loading...'}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div *ngIf=\"product.name !== ''\">\n    <img src=\"https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg\"/>\n    <h1>{{product.name}}</h1>\n    <p>{{product.description}}</p>\n\n  <ion-button expand=\"block\" (click)=\"addCart()\">Añadir al carrito</ion-button>\n          <ion-item>\n          <ion-label>Cantidad</ion-label>\n          <ion-input placeholder=\"Introduzca un número...\" type=\"number\" [(ngModel)]=\"quantity\"></ion-input>\n        </ion-item>\n    </div>\n  <div *ngIf=\"loadError\" class=\"error\">Error fetching data from api service. Check your internet connection or try again later.</div>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>{{product.name || 'Loading...'}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <div *ngIf=\"product.name !== ''\">\r\n    <img src=\"https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg\"/>\r\n    <h1>{{product.name}}</h1>\r\n    <p>{{product.description}}</p>\r\n  \r\n  <ion-button *ngIf=\"isAuth() else login\" expand=\"block\" (click)=\"addCart()\">Añadir al carrito</ion-button>\r\n  <ng-template #login> \r\n    <ion-item [routerLink]=\"['/account/login']\">\r\n      <ion-button expand=\"block\" color=\"primary\">Iniciar Sesión antes de añadir productos</ion-button>\r\n    </ion-item>\r\n  </ng-template>\r\n          \r\n    </div>\r\n  <div *ngIf=\"loadError\" class=\"error\">Error fetching data from api service. Check your internet connection or try again later.</div>\r\n</ion-content>\r\n";
       /***/
     }
   }]);

@@ -491,6 +491,240 @@
     },
 
     /***/
+    20053:
+    /*!***********************************************!*\
+      !*** ./src/app/services/cart/cart.service.ts ***!
+      \***********************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "CartService": function CartService() {
+          return (
+            /* binding */
+            _CartService
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! tslib */
+      61855);
+      /* harmony import */
+
+
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @angular/common/http */
+      31887);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! @angular/core */
+      42741);
+      /* harmony import */
+
+
+      var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! src/environments/environment */
+      24766);
+      /* harmony import */
+
+
+      var _user_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ../user/user.service */
+      33626);
+      /* harmony import */
+
+
+      var _product_product_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ../product/product.service */
+      53845);
+
+      var _CartService = /*#__PURE__*/function () {
+        function CartService(http, userService, productService) {
+          _classCallCheck(this, CartService);
+
+          this.http = http;
+          this.userService = userService;
+          this.productService = productService;
+          this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiHost + '/cart';
+          this.cart = {
+            items: []
+          };
+        }
+
+        _createClass(CartService, [{
+          key: "getCart",
+          value: function getCart() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.next = 2;
+                      return this.getProducts();
+
+                    case 2:
+                      this.cart.items = _context.sent;
+                      return _context.abrupt("return", this.cart);
+
+                    case 4:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          }
+        }, {
+          key: "getProducts",
+          value: function getProducts() {
+            var _this3 = this;
+
+            var token = this.userService.getToken();
+            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({
+              token: token
+            });
+            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            return new Promise(function (resolve) {
+              _this3.http.get(_this3.host + '/products', {
+                headers: headers,
+                params: params
+              }).subscribe(function (data) {
+                return resolve(data);
+              }, function (error) {
+                return console.log(error);
+              });
+            });
+          }
+        }, {
+          key: "addItem",
+          value: function addItem(quantity, productId) {
+            var _this4 = this;
+
+            var token = this.userService.getToken();
+            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({
+              token: token,
+              quantity: quantity,
+              productId: productId
+            });
+            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            return new Promise(function (resolve, reject) {
+              _this4.http.post(_this4.host, params, {
+                headers: headers
+              }).subscribe(function (data) {
+                _this4.getCart();
+
+                resolve(data);
+              }, function (error) {
+                return reject(error);
+              });
+            });
+          }
+        }, {
+          key: "removeItem",
+          value: function removeItem(productId) {
+            var _this5 = this;
+
+            var token = this.userService.getToken();
+            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({
+              token: token
+            });
+            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            return new Promise(function (resolve) {
+              _this5.http["delete"](_this5.host + "/".concat(productId), {
+                headers: headers,
+                params: params
+              }).subscribe(function (data) {
+                _this5.getCart();
+
+                resolve(data);
+              }, function (error) {
+                return console.log(error);
+              });
+            });
+          }
+        }, {
+          key: "removeItems",
+          value: function removeItems() {
+            var _this6 = this;
+
+            var token = this.userService.getToken();
+            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({
+              token: token
+            });
+            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            return new Promise(function (resolve) {
+              _this6.http["delete"](_this6.host, {
+                headers: headers,
+                params: params
+              }).subscribe(function (data) {
+                _this6.getCart();
+
+                resolve(data);
+              }, function (error) {
+                return console.log(error);
+              });
+            });
+          }
+        }, {
+          key: "updateItem",
+          value: function updateItem(quantity, productId) {
+            var _this7 = this;
+
+            var token = this.userService.getToken();
+            var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({
+              token: token,
+              quantity: quantity,
+              productId: productId
+            });
+            var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            return new Promise(function (resolve) {
+              _this7.http.put(_this7.host, params, {
+                headers: headers
+              }).subscribe(function (data) {
+                _this7.getCart();
+
+                resolve(data);
+              }, function (error) {
+                return console.log(error);
+              });
+            });
+          }
+        }]);
+
+        return CartService;
+      }();
+
+      _CartService.ctorParameters = function () {
+        return [{
+          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpClient
+        }, {
+          type: _user_user_service__WEBPACK_IMPORTED_MODULE_1__.UserService
+        }, {
+          type: _product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService
+        }];
+      };
+
+      _CartService = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.Injectable)({
+        providedIn: 'root'
+      })], _CartService);
+      /***/
+    },
+
+    /***/
     33626:
     /*!***********************************************!*\
       !*** ./src/app/services/user/user.service.ts ***!
@@ -572,12 +806,12 @@
         }, {
           key: "update",
           value: function update(name, email, password, phone) {
-            var _this3 = this;
+            var _this8 = this;
 
             return new Promise(function (resolve) {
-              var token = _this3.getToken();
+              var token = _this8.getToken();
 
-              var decodedToken = _this3.getDecodedToken();
+              var decodedToken = _this8.getDecodedToken();
 
               var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpParams().appendAll({
                 password: password,
@@ -589,7 +823,7 @@
               var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
               console.log(params, headers);
 
-              _this3.http.put(_this3.host + '/' + decodedToken.customerId, params, {
+              _this8.http.put(_this8.host + '/' + decodedToken.customerId, params, {
                 headers: headers
               }).subscribe(function (data) {
                 return resolve(data);
@@ -604,7 +838,7 @@
         }, {
           key: "login",
           value: function login(email, password) {
-            var _this4 = this;
+            var _this9 = this;
 
             return new Promise(function (resolve) {
               var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpParams().appendAll({
@@ -614,10 +848,10 @@
               var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
               console.log(params, headers);
 
-              _this4.http.post(_this4.host + '/auth', params, {
+              _this9.http.post(_this9.host + '/auth', params, {
                 headers: headers
               }).subscribe(function (data) {
-                _this4.token = data.token;
+                _this9.token = data.token;
                 resolve(data.token);
               }, function (error) {
                 return console.log(error);
@@ -908,7 +1142,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! tslib */
       61855);
       /* harmony import */
@@ -926,37 +1160,70 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/core */
       42741);
       /* harmony import */
 
 
-      var _services_user_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _services_cart_cart_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ../services/cart/cart.service */
+      20053);
+      /* harmony import */
+
+
+      var _services_user_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! ../services/user/user.service */
       33626);
 
-      var _TabsPage = function TabsPage(userService) {
-        var _this5 = this;
+      var _TabsPage = function TabsPage(userService, cartService) {
+        var _this10 = this;
 
         _classCallCheck(this, TabsPage);
 
         this.userService = userService;
+        this.cartService = cartService;
 
         this.isAuth = function () {
-          return _this5.userService.isAuth();
+          return _this10.userService.isAuth();
         };
 
-        this.numCartItems = 0;
+        this.getCart = function () {
+          return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(_this10, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _context2.next = 2;
+                    return this.cartService.getCart();
+
+                  case 2:
+                    return _context2.abrupt("return", this.cart = _context2.sent);
+
+                  case 3:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2, this);
+          }));
+        };
+
+        this.cart = {
+          items: []
+        };
+        this.getCart();
       };
 
       _TabsPage.ctorParameters = function () {
         return [{
-          type: _services_user_user_service__WEBPACK_IMPORTED_MODULE_2__.UserService
+          type: _services_user_user_service__WEBPACK_IMPORTED_MODULE_3__.UserService
+        }, {
+          type: _services_cart_cart_service__WEBPACK_IMPORTED_MODULE_2__.CartService
         }];
       };
 
-      _TabsPage = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+      _TabsPage = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-tabs',
         template: _raw_loader_tabs_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_tabs_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -996,7 +1263,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"products\">\n      <ion-icon name=\"home-outline\"></ion-icon>\n      <ion-label>Home</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"categories\">\n      <ion-icon name=\"apps-outline\"></ion-icon>\n      <ion-label>Categories</ion-label>\n    </ion-tab-button>\n\n    \n    <ion-tab-button tab=\"cart\" *ngIf=\"isAuth()\">\n      <ion-badge color=\"danger\" *ngIf=\"numCartItems > 0\">{{numCartItems}}</ion-badge>\n      <ion-icon name=\"cart-outline\"></ion-icon>\n      <ion-label>Cart</ion-label>\n    </ion-tab-button>\n\n    \n   \n    <ion-tab-button tab=\"search\">\n      <ion-icon name=\"search-outline\"></ion-icon>\n      <ion-label>Search</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"account\">\n      <ion-icon name=\"person-outline\"></ion-icon>\n      <ion-label>Account</ion-label>\n    </ion-tab-button>\n\n  </ion-tab-bar>\n\n</ion-tabs>\n";
+      __webpack_exports__["default"] = "<ion-tabs>\r\n\r\n  <ion-tab-bar slot=\"bottom\">\r\n    <ion-tab-button tab=\"products\">\r\n      <ion-icon name=\"home-outline\"></ion-icon>\r\n      <ion-label>Home</ion-label>\r\n    </ion-tab-button>\r\n\r\n    <ion-tab-button tab=\"categories\">\r\n      <ion-icon name=\"apps-outline\"></ion-icon>\r\n      <ion-label>Categories</ion-label>\r\n    </ion-tab-button>\r\n\r\n    \r\n    <ion-tab-button tab=\"cart\" *ngIf=\"isAuth()\">\r\n      <ion-badge color=\"danger\" *ngIf=\"cart.items.length > 0\">{{cart.items.length}}</ion-badge>\r\n      <ion-icon name=\"cart-outline\"></ion-icon>\r\n      <ion-label>Cart</ion-label>\r\n    </ion-tab-button>\r\n\r\n    \r\n   \r\n    <ion-tab-button tab=\"search\">\r\n      <ion-icon name=\"search-outline\"></ion-icon>\r\n      <ion-label>Search</ion-label>\r\n    </ion-tab-button>\r\n\r\n    <ion-tab-button tab=\"account\">\r\n      <ion-icon name=\"person-outline\"></ion-icon>\r\n      <ion-label>Account</ion-label>\r\n    </ion-tab-button>\r\n\r\n  </ion-tab-bar>\r\n\r\n</ion-tabs>\r\n";
       /***/
     }
   }]);

@@ -5,11 +5,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="scanNfcTag()">
-    <ion-fab-button color="dark">
-      <ion-icon name="scan-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
   <ion-searchbar [(ngModel)]="searchText" (ionChange)="searchProducts()"></ion-searchbar>
   <ion-grid>
     <ion-row>

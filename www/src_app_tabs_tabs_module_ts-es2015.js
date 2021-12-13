@@ -292,6 +292,99 @@ JwtModule.ctorParameters = () => [
 
 /***/ }),
 
+/***/ 20053:
+/*!***********************************************!*\
+  !*** ./src/app/services/cart/cart.service.ts ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CartService": function() { return /* binding */ CartService; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 61855);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ 31887);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 42741);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 24766);
+/* harmony import */ var _user_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../user/user.service */ 33626);
+/* harmony import */ var _product_product_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../product/product.service */ 53845);
+
+
+
+
+
+
+let CartService = class CartService {
+    constructor(http, userService, productService) {
+        this.http = http;
+        this.userService = userService;
+        this.productService = productService;
+        this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiHost + '/cart';
+        this.cart = { items: [] };
+    }
+    getCart() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+            this.cart.items = yield this.getProducts();
+            return this.cart;
+        });
+    }
+    getProducts() {
+        const token = this.userService.getToken();
+        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({ token });
+        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return new Promise(resolve => {
+            this.http.get(this.host + '/products', { headers, params }).subscribe((data) => resolve(data), error => console.log(error));
+        });
+    }
+    addItem(quantity, productId) {
+        const token = this.userService.getToken();
+        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({ token, quantity, productId });
+        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return new Promise((resolve, reject) => {
+            this.http.post(this.host, params, { headers }).subscribe(data => { this.getCart(); resolve(data); }, error => reject(error));
+        });
+    }
+    removeItem(productId) {
+        const token = this.userService.getToken();
+        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({ token });
+        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return new Promise(resolve => {
+            this.http.delete(this.host + `/${productId}`, { headers, params }).subscribe(data => { this.getCart(); resolve(data); }, error => console.log(error));
+        });
+    }
+    removeItems() {
+        const token = this.userService.getToken();
+        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({ token });
+        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return new Promise(resolve => {
+            this.http.delete(this.host, { headers, params }).subscribe(data => { this.getCart(); resolve(data); }, error => console.log(error));
+        });
+    }
+    updateItem(quantity, productId) {
+        const token = this.userService.getToken();
+        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({ token, quantity, productId });
+        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        return new Promise(resolve => {
+            this.http.put(this.host, params, { headers }).subscribe(data => { this.getCart(); resolve(data); }, error => console.log(error));
+        });
+    }
+};
+CartService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpClient },
+    { type: _user_user_service__WEBPACK_IMPORTED_MODULE_1__.UserService },
+    { type: _product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService }
+];
+CartService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Injectable)({
+        providedIn: 'root'
+    })
+], CartService);
+
+
+
+/***/ }),
+
 /***/ 33626:
 /*!***********************************************!*\
   !*** ./src/app/services/user/user.service.ts ***!
@@ -509,28 +602,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TabsPage": function() { return /* binding */ TabsPage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 61855);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 61855);
 /* harmony import */ var _raw_loader_tabs_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./tabs.page.html */ 97665);
 /* harmony import */ var _tabs_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tabs.page.scss */ 24427);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 42741);
-/* harmony import */ var _services_user_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/user/user.service */ 33626);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 42741);
+/* harmony import */ var _services_cart_cart_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/cart/cart.service */ 20053);
+/* harmony import */ var _services_user_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/user/user.service */ 33626);
+
 
 
 
 
 
 let TabsPage = class TabsPage {
-    constructor(userService) {
+    constructor(userService, cartService) {
         this.userService = userService;
+        this.cartService = cartService;
         this.isAuth = () => this.userService.isAuth();
-        this.numCartItems = 0;
+        this.getCart = () => (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () { return this.cart = yield this.cartService.getCart(); });
+        this.cart = { items: [] };
+        this.getCart();
     }
 };
 TabsPage.ctorParameters = () => [
-    { type: _services_user_user_service__WEBPACK_IMPORTED_MODULE_2__.UserService }
+    { type: _services_user_user_service__WEBPACK_IMPORTED_MODULE_3__.UserService },
+    { type: _services_cart_cart_service__WEBPACK_IMPORTED_MODULE_2__.CartService }
 ];
-TabsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+TabsPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-tabs',
         template: _raw_loader_tabs_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_tabs_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -561,7 +660,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"products\">\n      <ion-icon name=\"home-outline\"></ion-icon>\n      <ion-label>Home</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"categories\">\n      <ion-icon name=\"apps-outline\"></ion-icon>\n      <ion-label>Categories</ion-label>\n    </ion-tab-button>\n\n    \n    <ion-tab-button tab=\"cart\" *ngIf=\"isAuth()\">\n      <ion-badge color=\"danger\" *ngIf=\"numCartItems > 0\">{{numCartItems}}</ion-badge>\n      <ion-icon name=\"cart-outline\"></ion-icon>\n      <ion-label>Cart</ion-label>\n    </ion-tab-button>\n\n    \n   \n    <ion-tab-button tab=\"search\">\n      <ion-icon name=\"search-outline\"></ion-icon>\n      <ion-label>Search</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"account\">\n      <ion-icon name=\"person-outline\"></ion-icon>\n      <ion-label>Account</ion-label>\n    </ion-tab-button>\n\n  </ion-tab-bar>\n\n</ion-tabs>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-tabs>\r\n\r\n  <ion-tab-bar slot=\"bottom\">\r\n    <ion-tab-button tab=\"products\">\r\n      <ion-icon name=\"home-outline\"></ion-icon>\r\n      <ion-label>Home</ion-label>\r\n    </ion-tab-button>\r\n\r\n    <ion-tab-button tab=\"categories\">\r\n      <ion-icon name=\"apps-outline\"></ion-icon>\r\n      <ion-label>Categories</ion-label>\r\n    </ion-tab-button>\r\n\r\n    \r\n    <ion-tab-button tab=\"cart\" *ngIf=\"isAuth()\">\r\n      <ion-badge color=\"danger\" *ngIf=\"cart.items.length > 0\">{{cart.items.length}}</ion-badge>\r\n      <ion-icon name=\"cart-outline\"></ion-icon>\r\n      <ion-label>Cart</ion-label>\r\n    </ion-tab-button>\r\n\r\n    \r\n   \r\n    <ion-tab-button tab=\"search\">\r\n      <ion-icon name=\"search-outline\"></ion-icon>\r\n      <ion-label>Search</ion-label>\r\n    </ion-tab-button>\r\n\r\n    <ion-tab-button tab=\"account\">\r\n      <ion-icon name=\"person-outline\"></ion-icon>\r\n      <ion-label>Account</ion-label>\r\n    </ion-tab-button>\r\n\r\n  </ion-tab-bar>\r\n\r\n</ion-tabs>\r\n");
 
 /***/ })
 

@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductService } from './services/product/product.service';
 import { CategoryService } from './services/category/category.service';
-import { NFC, Ndef } from "@ionic-native/nfc/ngx";
+import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
 
 
 

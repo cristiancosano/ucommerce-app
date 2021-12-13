@@ -483,7 +483,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-card style=\"height: 100%;\" [routerLink]=\"['/categories', id]\" color=\"{{color}}\" class=\"ion-text-center\">\n  <ion-card-header>\n    <ion-card-subtitle>{{name}}</ion-card-subtitle>\n  </ion-card-header>\n</ion-card>";
+      __webpack_exports__["default"] = "<ion-card style=\"height: 100%;\" [routerLink]=\"['/categories', id]\" color=\"{{color}}\" class=\"ion-text-center\">\r\n  <ion-card-header>\r\n    <ion-card-subtitle>{{name}}</ion-card-subtitle>\r\n  </ion-card-header>\r\n</ion-card>";
       /***/
     },
 
@@ -501,7 +501,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Categories</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col size-xs=\"12\" size-sm=\"6\" size-md=\"4\" size-lg=\"3\" *ngFor=\"let category of categories; index as i\">\n        <app-category-card id=\"{{category.id}}\" name=\"{{category.name}}\" index=\"{{i}}\"></app-category-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>Categories</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-grid>\r\n    <ion-row>\r\n      <ion-col size-xs=\"12\" size-sm=\"6\" size-md=\"4\" size-lg=\"3\" *ngFor=\"let category of categories; index as i\">\r\n        <app-category-card id=\"{{category.id}}\" name=\"{{category.name}}\" index=\"{{i}}\"></app-category-card>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n</ion-content>\r\n";
       /***/
     }
   }]);

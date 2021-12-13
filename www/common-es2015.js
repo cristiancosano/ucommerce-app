@@ -572,14 +572,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ProductPage": function() { return /* binding */ ProductPage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 61855);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 61855);
 /* harmony import */ var _raw_loader_product_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./product.page.html */ 90718);
 /* harmony import */ var _product_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./product.page.scss */ 55229);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 42741);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 29535);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 34595);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 42741);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 29535);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 34595);
 /* harmony import */ var src_app_services_product_product_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/product/product.service */ 53845);
 /* harmony import */ var src_app_services_cart_cart_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/cart/cart.service */ 20053);
+/* harmony import */ var src_app_services_user_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/user/user.service */ 33626);
+
+
 
 
 
@@ -589,11 +592,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ProductPage = class ProductPage {
-    constructor(route, productService, loadingController, cartService) {
+    constructor(route, userService, productService, loadingController, cartService, toastController) {
         this.route = route;
+        this.userService = userService;
         this.productService = productService;
         this.loadingController = loadingController;
         this.cartService = cartService;
+        this.toastController = toastController;
+        this.isAuth = () => this.userService.isAuth();
         this.product = { name: '', categoryId: 0, unitPrice: 0 };
         this.loadError = false;
     }
@@ -601,33 +607,40 @@ let ProductPage = class ProductPage {
         this.id = Number(this.route.snapshot.paramMap.get('id'));
         this.presentLoading();
         this.getProduct();
-        //
+    }
+    presentToast(message) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message,
+                duration: 2000,
+                position: 'top'
+            });
+            yield toast.present();
+        });
     }
     addCart() {
-        this.productExtended = {
-            "productId": this.id,
-            "quantity": this.quantity,
-            "name": this.product.name,
-            "unitPrice": this.product.unitPrice,
-            "categoryId": this.product.categoryId
-        };
-        this.cartService.addProductToCart();
-        console.log("product: ", this.product);
+        this.cartService.addItem(1, this.id)
+            .then(() => {
+            this.presentToast('Item succesfully added to your cart!');
+        })
+            .catch(() => {
+            this.presentToast('There was a problem adding the item. It may already be in the cart or the connection failed.');
+        });
     }
     getProduct() {
-        this.productService.getProduct(this.id).then((product) => (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
+        this.productService.getProduct(this.id).then((product) => (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
             this.product = product;
             this.loading.then(message => message.dismiss('loaded', 'ok'));
-        })).catch(() => (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () { return this.loading.then(message => message.dismiss('not loaded', 'api timeout')); }));
+        })).catch(() => (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () { return this.loading.then(message => message.dismiss('not loaded', 'api timeout')); }));
     }
     presentLoading() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
             this.loading = this.loadingController.create({
                 cssClass: 'my-custom-class',
                 message: 'Please wait...',
                 backdropDismiss: false
             });
-            this.loading.then((message) => (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
+            this.loading.then((message) => (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
                 message.present();
                 const { data, role } = yield message.onDidDismiss();
                 if (role == undefined || role == 'api timeout') {
@@ -638,117 +651,20 @@ let ProductPage = class ProductPage {
     }
 };
 ProductPage.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute },
+    { type: src_app_services_user_user_service__WEBPACK_IMPORTED_MODULE_4__.UserService },
     { type: src_app_services_product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.LoadingController },
-    { type: src_app_services_cart_cart_service__WEBPACK_IMPORTED_MODULE_3__.CartService }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.LoadingController },
+    { type: src_app_services_cart_cart_service__WEBPACK_IMPORTED_MODULE_3__.CartService },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ToastController }
 ];
-ProductPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+ProductPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-product',
         template: _raw_loader_product_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_product_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
     })
 ], ProductPage);
-
-
-
-/***/ }),
-
-/***/ 20053:
-/*!***********************************************!*\
-  !*** ./src/app/services/cart/cart.service.ts ***!
-  \***********************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "CartService": function() { return /* binding */ CartService; }
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 61855);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ 31887);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 42741);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 24766);
-/* harmony import */ var _user_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../user/user.service */ 33626);
-/* harmony import */ var _product_product_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../product/product.service */ 53845);
-
-
-
-
-
-
-let CartService = class CartService {
-    constructor(http, userService, productService) {
-        this.http = http;
-        this.userService = userService;
-        this.productService = productService;
-        this.cart = [];
-        this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiHost + '/cart';
-    }
-    getCartByCustomer() {
-        const token = this.userService.getToken();
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({ token });
-        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return new Promise(resolve => {
-            this.http.get(this.host, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
-        });
-    }
-    getCartProducts() {
-        const token = this.userService.getToken();
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({ token });
-        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return new Promise(resolve => {
-            this.http.get(this.host + '/products', { headers, params }).subscribe(data => resolve(data), error => console.log(error));
-        });
-    }
-    addProductToCart() {
-        const token = this.userService.getToken();
-        const quantity = this.cartItem.quantity;
-        const productId = this.cartItem.productId;
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({ token, quantity, productId });
-        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return new Promise(resolve => {
-            this.http.post(this.host, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
-        });
-    }
-    removeProductOfCart(productId) {
-        const token = this.userService.getToken();
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({ token });
-        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return new Promise(resolve => {
-            this.http.delete(this.host + productId, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
-        });
-    }
-    removeCart() {
-        const token = this.userService.getToken();
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({ token });
-        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return new Promise(resolve => {
-            this.http.delete(this.host, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
-        });
-    }
-    updateItemCart() {
-        const token = this.userService.getToken();
-        const quantity = this.cartItem.quantity;
-        const productId = this.cartItem.productId;
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpParams().appendAll({ token, quantity, productId });
-        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return new Promise(resolve => {
-            this.http.put(this.host, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
-        });
-    }
-};
-CartService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpClient },
-    { type: _user_user_service__WEBPACK_IMPORTED_MODULE_1__.UserService },
-    { type: _product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService }
-];
-CartService = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Injectable)({
-        providedIn: 'root'
-    })
-], CartService);
 
 
 
@@ -774,7 +690,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("img {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n  height: 50%;\n  border-radius: 10px;\n  margin-top: 2.5em;\n}\n\nh1 {\n  text-align: center;\n}\n\n.error {\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.151);\n  font-size: 24px;\n  font-style: oblique;\n  text-align: center;\n  display: flex;\n  justify-content: center;\n  /* align horizontal */\n  align-items: center;\n  /* align vertical */\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb2R1Y3QucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDRixXQUFBO0VBQ0EsZ0NBQUE7RUFDQSxlQUFBO0VBQ0EsbUJBQUE7RUFDQSxrQkFBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLHFCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtBQUNGIiwiZmlsZSI6InByb2R1Y3QucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBtYXJnaW4tbGVmdDogYXV0bztcbiAgICBtYXJnaW4tcmlnaHQ6IGF1dG87XG4gICAgaGVpZ2h0OiA1MCU7XG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgICBtYXJnaW4tdG9wOiAyLjVlbTtcbn1cblxuaDF7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uZXJyb3J7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICB3aWR0aDogMTAwJTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjE1MSk7XG4gIGZvbnQtc2l6ZTogMjRweDtcbiAgZm9udC1zdHlsZTogb2JsaXF1ZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgLyogYWxpZ24gaG9yaXpvbnRhbCAqL1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAvKiBhbGlnbiB2ZXJ0aWNhbCAqL1xufVxuXG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("img {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n  height: 50%;\n  border-radius: 10px;\n  margin-top: 2.5em;\n}\n\nh1 {\n  text-align: center;\n}\n\n.error {\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.151);\n  font-size: 24px;\n  font-style: oblique;\n  text-align: center;\n  display: flex;\n  justify-content: center;\n  /* align horizontal */\n  align-items: center;\n  /* align vertical */\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb2R1Y3QucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDRixXQUFBO0VBQ0EsZ0NBQUE7RUFDQSxlQUFBO0VBQ0EsbUJBQUE7RUFDQSxrQkFBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLHFCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtBQUNGIiwiZmlsZSI6InByb2R1Y3QucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcclxuICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgbWFyZ2luLWxlZnQ6IGF1dG87XHJcbiAgICBtYXJnaW4tcmlnaHQ6IGF1dG87XHJcbiAgICBoZWlnaHQ6IDUwJTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICBtYXJnaW4tdG9wOiAyLjVlbTtcclxufVxyXG5cclxuaDF7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuXHJcbi5lcnJvcntcclxuICAgIGhlaWdodDogMTAwJTtcclxuICB3aWR0aDogMTAwJTtcclxuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuMTUxKTtcclxuICBmb250LXNpemU6IDI0cHg7XHJcbiAgZm9udC1zdHlsZTogb2JsaXF1ZTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAvKiBhbGlnbiBob3Jpem9udGFsICovXHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAvKiBhbGlnbiB2ZXJ0aWNhbCAqL1xyXG59XHJcblxyXG4iXX0= */");
 
 /***/ }),
 
@@ -786,7 +702,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-card [routerLink]=\"['/products', id]\">\n  <img src=\"{{image}}\"/>\n  <ion-card-header>\n    <ion-card-subtitle>{{name}}</ion-card-subtitle>\n    <ion-card-title>{{price}}€</ion-card-title>\n  </ion-card-header>\n\n  <ion-card-content>\n    {{(description.length > 144) ?  (description | slice:0:144)+'...' : description}}\n  </ion-card-content> \n\n</ion-card>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-card [routerLink]=\"['/products', id]\">\r\n  <img src=\"{{image}}\"/>\r\n  <ion-card-header>\r\n    <ion-card-subtitle>{{name}}</ion-card-subtitle>\r\n    <ion-card-title>{{price}}€</ion-card-title>\r\n  </ion-card-header>\r\n\r\n  <ion-card-content>\r\n    {{(description.length > 144) ?  (description | slice:0:144)+'...' : description}}\r\n  </ion-card-content> \r\n\r\n</ion-card>");
 
 /***/ }),
 
@@ -798,7 +714,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{product.name || 'Loading...'}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div *ngIf=\"product.name !== ''\">\n    <img src=\"https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg\"/>\n    <h1>{{product.name}}</h1>\n    <p>{{product.description}}</p>\n\n  <ion-button expand=\"block\" (click)=\"addCart()\">Añadir al carrito</ion-button>\n          <ion-item>\n          <ion-label>Cantidad</ion-label>\n          <ion-input placeholder=\"Introduzca un número...\" type=\"number\" [(ngModel)]=\"quantity\"></ion-input>\n        </ion-item>\n    </div>\n  <div *ngIf=\"loadError\" class=\"error\">Error fetching data from api service. Check your internet connection or try again later.</div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>{{product.name || 'Loading...'}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <div *ngIf=\"product.name !== ''\">\r\n    <img src=\"https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg\"/>\r\n    <h1>{{product.name}}</h1>\r\n    <p>{{product.description}}</p>\r\n  \r\n  <ion-button *ngIf=\"isAuth() else login\" expand=\"block\" (click)=\"addCart()\">Añadir al carrito</ion-button>\r\n  <ng-template #login> \r\n    <ion-item [routerLink]=\"['/account/login']\">\r\n      <ion-button expand=\"block\" color=\"primary\">Iniciar Sesión antes de añadir productos</ion-button>\r\n    </ion-item>\r\n  </ng-template>\r\n          \r\n    </div>\r\n  <div *ngIf=\"loadError\" class=\"error\">Error fetching data from api service. Check your internet connection or try again later.</div>\r\n</ion-content>\r\n");
 
 /***/ })
 

@@ -203,48 +203,31 @@ let CartPage = class CartPage {
         this.productService = productService;
         this.cartService = cartService;
         this.router = router;
-        this.selectedItems = [];
-        this.total = 0;
-        this.getCartUser = () => {
-            this.cartService.getCartByCustomer().then((data) => {
-                this.cart = data;
-                console.log(data);
-            });
-        };
-        this.getCartProducts = () => {
-            this.cartService.getCartProducts().then((data) => {
-                this.productsCart = data;
-                this.updateTotalPrice();
-            });
-        };
-        this.updateTotalPrice = () => {
-            for (let x = 0; x < this.productsCart.length; x++) {
-                this.total = this.total + (this.productsCart[x].quantity * this.productsCart[x].unitPrice);
-            }
-            this.totalBuyPrice = this.total;
-            console.log(this.total);
-        };
-        this.updateCart = () => {
-            this.total = 0;
-            this.getCartUser();
-            this.getCartProducts();
-        };
+        this.cart = { items: [] };
     }
     ngOnInit() {
-        this.productId = Number(this.route.snapshot.paramMap.get('id'));
-        this.getCartUser();
-        this.getCartProducts();
-        let items = this.productsCart;
-        let selected = {};
-        for (let obj of items) {
-            selected[obj.productId] = Object.assign(Object.assign({}, obj), { count: 1 });
-        }
-        this.selectedItems = Object.keys(selected).map(key => selected[key]);
-        this.total = this.selectedItems.reduce((a, b) => a + (b.quantity * b.unitPrice), 0);
+        this.getItems();
     }
-    remove() {
-        this.cartService.removeProductOfCart(this.productId); //
-        this.router.navigate(["/products"]);
+    removeItem(productId) {
+        this.cartService.removeItem(productId);
+    }
+    removeItems() {
+        this.cartService.removeItems();
+    }
+    getItems() {
+        this.cartService.getCart().then(cart => this.cart = cart);
+    }
+    updateItemUnits(quantity, productId) {
+        if (quantity > 0)
+            this.cartService.updateItem(quantity, productId);
+        else
+            this.removeItem(productId);
+    }
+    getTotal() {
+        let total = 0;
+        for (let product of this.cart.items)
+            total += product.quantity * product.unitPrice;
+        return total.toFixed(2);
     }
 };
 CartPage.ctorParameters = () => [
@@ -285,7 +268,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjYXJ0LnBhZ2Uuc2NzcyJ9 */");
+/* harmony default export */ __webpack_exports__["default"] = (".text-center {\n  text-align: center;\n}\n\n.full-height {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n#shopping-cart-image {\n  width: 50%;\n  margin: 5% auto;\n  display: block;\n  filter: grayscale(50%) opacity(40%);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNhcnQucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtBQUNKOztBQUVBO0VBQ0ksVUFBQTtFQUNBLGVBQUE7RUFDQSxjQUFBO0VBQ0EsbUNBQUE7QUFDSiIsImZpbGUiOiJjYXJ0LnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi50ZXh0LWNlbnRlcntcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG5cclxuLmZ1bGwtaGVpZ2h0e1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5cclxuI3Nob3BwaW5nLWNhcnQtaW1hZ2V7XHJcbiAgICB3aWR0aDogNTAlO1xyXG4gICAgbWFyZ2luOiA1JSBhdXRvO1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBmaWx0ZXI6IGdyYXlzY2FsZSg1MCUpIG9wYWNpdHkoNDAlKTtcclxufSJdfQ== */");
 
 /***/ }),
 
@@ -297,7 +280,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-item  [routerLink]=\"['/cart', id]\">\n  <ion-thumbnail slot=\"start\">\n    <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\n  </ion-thumbnail>\n  <ion-label>\n    <h3>Cantidad: {{quantity}}</h3>\n    <p>Precio unitario: {{price}}</p>\n    <p><strong>Total: </strong> EUR {{total}}</p>\n  </ion-label>\n</ion-item>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-item  [routerLink]=\"['/cart', id]\">\r\n  <ion-thumbnail slot=\"start\">\r\n    <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\r\n  </ion-thumbnail>\r\n  <ion-label>\r\n    <h3>Cantidad: {{quantity}}</h3>\r\n    <p>Precio unitario: {{price}}</p>\r\n    <p><strong>Total: </strong> EUR {{total}}</p>\r\n  </ion-label>\r\n</ion-item>");
 
 /***/ }),
 
@@ -309,7 +292,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Carrito</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-button expand=\"block\" (click)=\"updateCart()\">Reload</ion-button>\n\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor=\"let item of selectedItems\" lines=\"inset\">\n     {{item.quantity}} x {{item.name}} - {{item.unitPrice}} €\n     <span slot=\"end\"t> {{item.unitPrice * item.quantity}} € </span>\n    </ion-item>\n    <ion-item class=\"bold\">\n      Total: <span slot=\"end\"> {{total}} € </span>\n    </ion-item>\n  </ion-list>\n\n  <div class=\"center\">\n    <button ion-button class=\"button1\" full round (click)=\"presentModal()\" >Realizar Pedido</button>\n    <!-- Falta hacer la funcion de realizar pedido. -->\n    <button ion-button class=\"button2\" full round (click)=\"remove()\" >Borrar carrito</button>\n  </div>\n\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>Carrito</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n\r\n<ion-content>\r\n  <div *ngIf=\"cart.items.length > 0; else noItems\">\r\n    <ion-list>\r\n      <ion-item *ngFor=\"let item of cart.items\" class=\"ion-text-wrap\">\r\n        <ion-grid>\r\n          <ion-row class=\"ion-aling-items-center\">\r\n            <ion-col size-xs=\"5\" size-sm=\"3\" size-md=\"2\" class=\"ion-align-items-center\">\r\n              <ion-select style=\"margin: 0\" interface=\"popover\" value=\"{{item.quantity}}\" (ionChange)=\"updateItemUnits($event.detail.value, item.productId)\">\r\n                <ion-select-option value=\"{{i}}\"  *ngFor=\"let element of [].constructor(10); let i = index\">\r\n                  {{i}}\r\n                  <span *ngIf=\"i==0\">(eliminar)</span>\r\n                </ion-select-option>\r\n\r\n              </ion-select>\r\n            </ion-col>\r\n            <ion-col size-xs=\"7\" size-sm=\"9\" size-md=\"10\">\r\n              {{item.name}}\r\n            </ion-col>\r\n          </ion-row>\r\n        </ion-grid>\r\n      </ion-item>\r\n      <ion-item >\r\n        Total: <span slot=\"end\">{{getTotal()}} €</span>\r\n      </ion-item>\r\n    </ion-list>\r\n\r\n    <div class=\"center\">\r\n      <ion-button expand=\"block\" (click)=\"removeItems()\">Eliminar Carrito</ion-button>\r\n    </div>\r\n  \r\n    <div class=\"center\">\r\n      <ion-button expand=\"block\">Realizar Pedido</ion-button>\r\n    </div>\r\n  </div>\r\n\r\n  <ng-template #noItems>\r\n    <div class=\"full-height\">\r\n      <div class=\"vertical-align-middle\">\r\n        <img src=\"assets/images/shopping-cart.png\" alt=\"Shopping Cart\" width=\"50%\" id=\"shopping-cart-image\">\r\n        <p class=\"text-center\">There are no items in the cart. Add first someone product.</p>\r\n      </div>\r\n    </div>\r\n  </ng-template>\r\n\r\n</ion-content>");
 
 /***/ })
 

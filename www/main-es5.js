@@ -216,7 +216,7 @@
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/router */
       29535);
       /* harmony import */
@@ -228,9 +228,21 @@
       /* harmony import */
 
 
+      var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! @angular/common */
+      16274);
+      /* harmony import */
+
+
       var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @ionic/angular */
       34595);
+      /* harmony import */
+
+
+      var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! @angular/forms */
+      93324);
       /* harmony import */
 
 
@@ -263,9 +275,9 @@
       _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_8__.HttpClientModule],
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_8__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.ReactiveFormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule],
         providers: [{
-          provide: _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouteReuseStrategy,
+          provide: _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouteReuseStrategy,
           useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicRouteStrategy
         }, _services_product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService, _services_category_category_service__WEBPACK_IMPORTED_MODULE_3__.CategoryService],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent]
@@ -622,7 +634,7 @@
 
       var _environment = {
         production: false,
-        apiHost: 'http://localhost:8080'
+        apiHost: 'https://ucommerce-api.herokuapp.com'
       };
       /*
        * For easier debugging in development mode, you can import the following file
@@ -793,7 +805,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-app>\n  <ion-router-outlet></ion-router-outlet>\n</ion-app>\n";
+      __webpack_exports__["default"] = "<ion-app>\r\n  <ion-router-outlet></ion-router-outlet>\r\n</ion-app>\r\n";
       /***/
     }
   },

@@ -295,7 +295,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>Login</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-item>\n    <ion-input placeholder=\"Introduce your e-mail\" type=\"email\" [(ngModel)]=\"email\"></ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-input placeholder=\"Introduce your password\" type=\"password\" [(ngModel)]=\"password\"></ion-input>\n  </ion-item>\n  <ion-button expand=\"full\" (click)=\"login()\">Login</ion-button>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>Login</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-item>\r\n    <ion-input placeholder=\"Introduce your e-mail\" type=\"email\" [(ngModel)]=\"email\"></ion-input>\r\n  </ion-item>\r\n  <ion-item>\r\n    <ion-input placeholder=\"Introduce your password\" type=\"password\" [(ngModel)]=\"password\"></ion-input>\r\n  </ion-item>\r\n  <ion-button expand=\"full\" (click)=\"login()\">Login</ion-button>\r\n</ion-content>\r\n";
       /***/
     }
   }]);
