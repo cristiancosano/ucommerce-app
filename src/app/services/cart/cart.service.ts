@@ -28,11 +28,13 @@ export class CartService {
 
   getProducts(){
     const token = this.userService.getToken();
-    const params = new HttpParams().appendAll({token})
-    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    return new Promise <Array<CartItem>>(resolve => {
-      this.http.get(this.host + '/products', {headers,params}).subscribe((data:Array<CartItem>) => resolve(data), error => console.log(error))
-    })
+    if(token != null){
+      const params = new HttpParams().appendAll({token})
+      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+      return new Promise <Array<CartItem>>(resolve => {
+        this.http.get(this.host + '/products', {headers,params}).subscribe((data:Array<CartItem>) => resolve(data), error => console.log(error))
+      })
+    }
   }
 
   addItem(quantity: number, productId: number){
