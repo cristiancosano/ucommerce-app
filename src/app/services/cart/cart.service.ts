@@ -6,6 +6,8 @@ import { UserService } from '../user/user.service';
 import { Product } from 'src/app/interfaces/Product';
 import { ProductExtended } from 'src/app/interfaces/ProductExtended';
 import { ProductService } from '../product/product.service';
+import { ToastController } from '@ionic/angular';
+
 
 @Injectable({
   providedIn: 'root'
