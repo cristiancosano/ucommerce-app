@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiHost: 'https://ucommerce-api.herokuapp.com'
+  //apiHost: 'https://ucommerce-api.herokuapp.com'
+  apiHost: 'http://localhost:8080'
 };
 
 /*
