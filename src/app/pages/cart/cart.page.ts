@@ -62,6 +62,7 @@ export class CartPage implements OnInit {
     this.orderService.createOrder(Number(this.getTotal()),this.cart.items)
     .then(() => {
       this.presentToast('Pedido realizado correctamente!!')
+      this.cartService.removeItems();
     })
     .catch(() => {
       this.presentToast('Ha ocurrido un problema al realizar el pedido :(')
