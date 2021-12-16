@@ -11,7 +11,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size-xs="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let product of products">
-        <app-product-card id="{{product.productId}}" name="{{product.name}}" description="{{product.description}}" price="{{product.unitPrice}}" image="https://picsum.photos/800/400"></app-product-card>
+        <app-product-card id="{{product.productId}}" name="{{product.name}}" description="{{product.description}}" price="{{product.unitPrice}}" images="{{product.images}}"></app-product-card>
       </ion-col>
     </ion-row>
   </ion-grid>

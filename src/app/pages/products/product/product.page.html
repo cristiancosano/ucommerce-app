@@ -9,7 +9,8 @@
 
 <ion-content>
   <div *ngIf="product.name !== ''">
-    <img src="https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg"/>
+    <!-- <img src="https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg"/> -->
+    <img src="{{product.images[0]}}"/>
     <h1>{{product.name}}</h1>
     <p>{{product.description}}</p>
   

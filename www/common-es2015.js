@@ -462,13 +462,13 @@ __webpack_require__.r(__webpack_exports__);
 let ProductCardComponent = class ProductCardComponent {
     constructor() { }
     ngOnInit() {
-        console.log(this.id, typeof this.images);
+        console.log(this.id, typeof this.images[0]);
         if (typeof this.images == 'string' && this.images != '')
-            this.mainImage = this.images;
+            this.mainImage = this.images.split(',')[0];
         else if (typeof this.images == 'object')
             this.mainImage = this.images[0];
         else
-            this.mainImage = 'https://picsum.photos/800/400';
+            this.mainImage = 'https://picsum.photos/400/400';
         console.log(this.mainImage);
     }
 };
@@ -798,7 +798,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{product.name || 'Loading...'}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div *ngIf=\"product.name !== ''\">\n    <img src=\"https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg\"/>\n    <h1>{{product.name}}</h1>\n    <p>{{product.description}}</p>\n  \n  <ion-button *ngIf=\"isAuth() else login\" expand=\"block\" (click)=\"addCart()\">Añadir al carrito</ion-button>\n  <ng-template #login> \n    <ion-item [routerLink]=\"['/account/login']\">\n      <ion-button expand=\"block\" color=\"primary\">Iniciar Sesión antes de añadir productos</ion-button>\n    </ion-item>\n  </ng-template>\n          \n    </div>\n  <div *ngIf=\"loadError\" class=\"error\">Error fetching data from api service. Check your internet connection or try again later.</div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{product.name || 'Loading...'}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div *ngIf=\"product.name !== ''\">\n    <!-- <img src=\"https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg\"/> -->\n    <img src=\"{{product.images[0]}}\"/>\n    <h1>{{product.name}}</h1>\n    <p>{{product.description}}</p>\n  \n  <ion-button *ngIf=\"isAuth() else login\" expand=\"block\" (click)=\"addCart()\">Añadir al carrito</ion-button>\n  <ng-template #login> \n    <ion-item [routerLink]=\"['/account/login']\">\n      <ion-button expand=\"block\" color=\"primary\">Iniciar Sesión antes de añadir productos</ion-button>\n    </ion-item>\n  </ng-template>\n          \n    </div>\n  <div *ngIf=\"loadError\" class=\"error\">Error fetching data from api service. Check your internet connection or try again later.</div>\n</ion-content>\n");
 
 /***/ })
 
