@@ -2,6 +2,6 @@ export interface Product{
     productId?: number,
     name: string,
     unitPrice: number,
-    image?: number,
+    images?: object,
     categoryId: number
 }

@@ -331,11 +331,13 @@ let CartService = class CartService {
     }
     getProducts() {
         const token = this.userService.getToken();
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({ token });
-        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return new Promise(resolve => {
-            this.http.get(this.host + '/products', { headers, params }).subscribe((data) => resolve(data), error => console.log(error));
-        });
+        if (token != null) {
+            const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpParams().appendAll({ token });
+            const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            return new Promise(resolve => {
+                this.http.get(this.host + '/products', { headers, params }).subscribe((data) => resolve(data), error => console.log(error));
+            });
+        }
     }
     addItem(quantity, productId) {
         const token = this.userService.getToken();
@@ -660,7 +662,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-tabs>\r\n\r\n  <ion-tab-bar slot=\"bottom\">\r\n    <ion-tab-button tab=\"products\">\r\n      <ion-icon name=\"home-outline\"></ion-icon>\r\n      <ion-label>Home</ion-label>\r\n    </ion-tab-button>\r\n\r\n    <ion-tab-button tab=\"categories\">\r\n      <ion-icon name=\"apps-outline\"></ion-icon>\r\n      <ion-label>Categories</ion-label>\r\n    </ion-tab-button>\r\n\r\n    \r\n    <ion-tab-button tab=\"cart\" *ngIf=\"isAuth()\">\r\n      <ion-badge color=\"danger\" *ngIf=\"cart.items.length > 0\">{{cart.items.length}}</ion-badge>\r\n      <ion-icon name=\"cart-outline\"></ion-icon>\r\n      <ion-label>Cart</ion-label>\r\n    </ion-tab-button>\r\n\r\n    \r\n   \r\n    <ion-tab-button tab=\"search\">\r\n      <ion-icon name=\"search-outline\"></ion-icon>\r\n      <ion-label>Search</ion-label>\r\n    </ion-tab-button>\r\n\r\n    <ion-tab-button tab=\"account\">\r\n      <ion-icon name=\"person-outline\"></ion-icon>\r\n      <ion-label>Account</ion-label>\r\n    </ion-tab-button>\r\n\r\n  </ion-tab-bar>\r\n\r\n</ion-tabs>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"products\">\n      <ion-icon name=\"home-outline\"></ion-icon>\n      <ion-label>Home</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"categories\">\n      <ion-icon name=\"apps-outline\"></ion-icon>\n      <ion-label>Categories</ion-label>\n    </ion-tab-button>\n\n    \n    <ion-tab-button tab=\"cart\" *ngIf=\"isAuth()\">\n      <ion-badge color=\"danger\" *ngIf=\"cart.items.length > 0\">{{cart.items.length}}</ion-badge>\n      <ion-icon name=\"cart-outline\"></ion-icon>\n      <ion-label>Cart</ion-label>\n    </ion-tab-button>\n\n    \n   \n    <ion-tab-button tab=\"search\">\n      <ion-icon name=\"search-outline\"></ion-icon>\n      <ion-label>Search</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"account\">\n      <ion-icon name=\"person-outline\"></ion-icon>\n      <ion-label>Account</ion-label>\n    </ion-tab-button>\n\n  </ion-tab-bar>\n\n</ion-tabs>\n");
 
 /***/ })
 

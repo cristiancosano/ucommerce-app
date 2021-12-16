@@ -461,14 +461,24 @@ __webpack_require__.r(__webpack_exports__);
 
 let ProductCardComponent = class ProductCardComponent {
     constructor() { }
-    ngOnInit() { }
+    ngOnInit() {
+        console.log(this.id, typeof this.images);
+        if (typeof this.images == 'string' && this.images != '')
+            this.mainImage = this.images;
+        else if (typeof this.images == 'object')
+            this.mainImage = this.images[0];
+        else
+            this.mainImage = 'https://picsum.photos/800/400';
+        console.log(this.mainImage);
+    }
 };
 ProductCardComponent.ctorParameters = () => [];
 ProductCardComponent.propDecorators = {
     name: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }],
     description: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }],
     price: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }],
-    image: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }],
+    images: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }],
+    mainImage: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }],
     id: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }]
 };
 ProductCardComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
@@ -670,6 +680,80 @@ ProductPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
 
 /***/ }),
 
+/***/ 6028:
+/*!*************************************************!*\
+  !*** ./src/app/services/order/order.service.ts ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "OrderService": function() { return /* binding */ OrderService; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 61855);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ 31887);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 42741);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 24766);
+/* harmony import */ var _user_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../user/user.service */ 33626);
+
+
+
+
+
+let OrderService = class OrderService {
+    constructor(http, userService) {
+        this.http = http;
+        this.userService = userService;
+        this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiHost + '/users';
+        this.host2 = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiHost + '/orders';
+    }
+    getOrders() {
+        return new Promise(resolve => {
+            const token = this.userService.getToken();
+            const decodedToken = this.userService.getDecodedToken();
+            const customerId = decodedToken.customerId;
+            const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpParams().appendAll({ token });
+            console.log(token);
+            console.log(this.host);
+            const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            this.http.get(this.host + `/${customerId}/shopping-history`, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
+        });
+    }
+    getOrderById(orderId) {
+        return new Promise(resolve => {
+            const token = this.userService.getToken();
+            const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpParams().appendAll({ token });
+            console.log(token);
+            console.log(this.host);
+            const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            this.http.get(this.host2 + `/${orderId}`, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
+        });
+    }
+    createOrder(total, items) {
+        return new Promise(resolve => {
+            const token = this.userService.getToken();
+            const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpParams().appendAll({ total, token, items: JSON.stringify(items) });
+            const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            console.log(params, headers);
+            this.http.post(this.host2, params, { headers }).subscribe(data => resolve(data), error => console.log(error));
+        });
+    }
+};
+OrderService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient },
+    { type: _user_user_service__WEBPACK_IMPORTED_MODULE_1__.UserService }
+];
+OrderService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+        providedIn: 'root'
+    })
+], OrderService);
+
+
+
+/***/ }),
+
 /***/ 53583:
 /*!*********************************************************************!*\
   !*** ./src/app/components/product-card/product-card.component.scss ***!
@@ -690,7 +774,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("img {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n  height: 50%;\n  border-radius: 10px;\n  margin-top: 2.5em;\n}\n\nh1 {\n  text-align: center;\n}\n\n.error {\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.151);\n  font-size: 24px;\n  font-style: oblique;\n  text-align: center;\n  display: flex;\n  justify-content: center;\n  /* align horizontal */\n  align-items: center;\n  /* align vertical */\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb2R1Y3QucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDRixXQUFBO0VBQ0EsZ0NBQUE7RUFDQSxlQUFBO0VBQ0EsbUJBQUE7RUFDQSxrQkFBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLHFCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtBQUNGIiwiZmlsZSI6InByb2R1Y3QucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcclxuICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgbWFyZ2luLWxlZnQ6IGF1dG87XHJcbiAgICBtYXJnaW4tcmlnaHQ6IGF1dG87XHJcbiAgICBoZWlnaHQ6IDUwJTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICBtYXJnaW4tdG9wOiAyLjVlbTtcclxufVxyXG5cclxuaDF7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuXHJcbi5lcnJvcntcclxuICAgIGhlaWdodDogMTAwJTtcclxuICB3aWR0aDogMTAwJTtcclxuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuMTUxKTtcclxuICBmb250LXNpemU6IDI0cHg7XHJcbiAgZm9udC1zdHlsZTogb2JsaXF1ZTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAvKiBhbGlnbiBob3Jpem9udGFsICovXHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAvKiBhbGlnbiB2ZXJ0aWNhbCAqL1xyXG59XHJcblxyXG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("img {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n  height: 50%;\n  border-radius: 10px;\n  margin-top: 2.5em;\n}\n\nh1 {\n  text-align: center;\n}\n\n.error {\n  height: 100%;\n  width: 100%;\n  background: rgba(0, 0, 0, 0.151);\n  font-size: 24px;\n  font-style: oblique;\n  text-align: center;\n  display: flex;\n  justify-content: center;\n  /* align horizontal */\n  align-items: center;\n  /* align vertical */\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb2R1Y3QucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtBQUNKOztBQUVBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDRixXQUFBO0VBQ0EsZ0NBQUE7RUFDQSxlQUFBO0VBQ0EsbUJBQUE7RUFDQSxrQkFBQTtFQUNBLGFBQUE7RUFDQSx1QkFBQTtFQUNBLHFCQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtBQUNGIiwiZmlsZSI6InByb2R1Y3QucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW1nIHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBtYXJnaW4tbGVmdDogYXV0bztcbiAgICBtYXJnaW4tcmlnaHQ6IGF1dG87XG4gICAgaGVpZ2h0OiA1MCU7XG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgICBtYXJnaW4tdG9wOiAyLjVlbTtcbn1cblxuaDF7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uZXJyb3J7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICB3aWR0aDogMTAwJTtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjE1MSk7XG4gIGZvbnQtc2l6ZTogMjRweDtcbiAgZm9udC1zdHlsZTogb2JsaXF1ZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgLyogYWxpZ24gaG9yaXpvbnRhbCAqL1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAvKiBhbGlnbiB2ZXJ0aWNhbCAqL1xufVxuXG4iXX0= */");
 
 /***/ }),
 
@@ -702,7 +786,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-card [routerLink]=\"['/products', id]\">\r\n  <img src=\"{{image}}\"/>\r\n  <ion-card-header>\r\n    <ion-card-subtitle>{{name}}</ion-card-subtitle>\r\n    <ion-card-title>{{price}}€</ion-card-title>\r\n  </ion-card-header>\r\n\r\n  <ion-card-content>\r\n    {{(description.length > 144) ?  (description | slice:0:144)+'...' : description}}\r\n  </ion-card-content> \r\n\r\n</ion-card>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-card [routerLink]=\"['/products', id]\">\n  <img src=\"{{mainImage}}\"/>\n  <ion-card-header>\n    <ion-card-subtitle>{{name}}</ion-card-subtitle>\n    <ion-card-title>{{price}}€</ion-card-title>\n  </ion-card-header>\n\n  <ion-card-content>\n    {{(description.length > 144) ?  (description | slice:0:144)+'...' : description}}\n  </ion-card-content> \n\n</ion-card>");
 
 /***/ }),
 
@@ -714,7 +798,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>{{product.name || 'Loading...'}}</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <div *ngIf=\"product.name !== ''\">\r\n    <img src=\"https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg\"/>\r\n    <h1>{{product.name}}</h1>\r\n    <p>{{product.description}}</p>\r\n  \r\n  <ion-button *ngIf=\"isAuth() else login\" expand=\"block\" (click)=\"addCart()\">Añadir al carrito</ion-button>\r\n  <ng-template #login> \r\n    <ion-item [routerLink]=\"['/account/login']\">\r\n      <ion-button expand=\"block\" color=\"primary\">Iniciar Sesión antes de añadir productos</ion-button>\r\n    </ion-item>\r\n  </ng-template>\r\n          \r\n    </div>\r\n  <div *ngIf=\"loadError\" class=\"error\">Error fetching data from api service. Check your internet connection or try again later.</div>\r\n</ion-content>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>{{product.name || 'Loading...'}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div *ngIf=\"product.name !== ''\">\n    <img src=\"https://i.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg\"/>\n    <h1>{{product.name}}</h1>\n    <p>{{product.description}}</p>\n  \n  <ion-button *ngIf=\"isAuth() else login\" expand=\"block\" (click)=\"addCart()\">Añadir al carrito</ion-button>\n  <ng-template #login> \n    <ion-item [routerLink]=\"['/account/login']\">\n      <ion-button expand=\"block\" color=\"primary\">Iniciar Sesión antes de añadir productos</ion-button>\n    </ion-item>\n  </ng-template>\n          \n    </div>\n  <div *ngIf=\"loadError\" class=\"error\">Error fetching data from api service. Check your internet connection or try again later.</div>\n</ion-content>\n");
 
 /***/ })
 

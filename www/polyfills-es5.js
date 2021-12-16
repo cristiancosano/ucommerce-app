@@ -12391,7 +12391,7 @@
     },
 
     /***/
-    8526:
+    6640:
     /*!*************************************************************!*\
       !*** ./node_modules/core-js/modules/es.string.fontcolor.js ***!
       \*************************************************************/
@@ -15606,7 +15606,7 @@
 
       var core_js_modules_es_string_fontcolor__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(
       /*! core-js/modules/es.string.fontcolor */
-      8526);
+      6640);
       /* harmony import */
 
 

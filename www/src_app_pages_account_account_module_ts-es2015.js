@@ -34,7 +34,7 @@ const routes = [
     },
     {
         path: 'shopping-history',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_account_shopping-history_shopping-history_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./shopping-history/shopping-history.module */ 23970)).then(m => m.ShoppingHistoryPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_account_shopping-history_shopping-history_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./shopping-history/shopping-history.module */ 23970)).then(m => m.ShoppingHistoryPageModule)
     },
 ];
 let AccountPageRoutingModule = class AccountPageRoutingModule {
@@ -177,7 +177,7 @@ AccountPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("ion-item:hover {\n  cursor: pointer;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFjY291bnQucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBQTtBQUNKIiwiZmlsZSI6ImFjY291bnQucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWl0ZW06aG92ZXJ7XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("ion-item:hover {\n  cursor: pointer;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFjY291bnQucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBQTtBQUNKIiwiZmlsZSI6ImFjY291bnQucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWl0ZW06aG92ZXJ7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xufSJdfQ== */");
 
 /***/ }),
 
@@ -189,7 +189,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>My Account</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-list>\r\n    <div *ngIf=\"isAuth() else login\">\r\n      <ion-item [routerLink]=\"['/account/personal-information']\">\r\n        <ion-label>My personal information</ion-label>\r\n      </ion-item>\r\n      <ion-item [routerLink]=\"['/account/shopping-history']\">\r\n        <ion-label>Shopping history</ion-label>\r\n      </ion-item>\r\n      <ion-item (click)=\"presentActionSheet()\">\r\n        <ion-label>Logout</ion-label>\r\n      </ion-item>\r\n    </div>\r\n\r\n    <ng-template #login> \r\n      <ion-item [routerLink]=\"['/account/login']\">\r\n        <ion-label>Login</ion-label>\r\n      </ion-item>\r\n    </ng-template>\r\n    \r\n  </ion-list>\r\n</ion-content>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>My Account</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <div *ngIf=\"isAuth() else login\">\n      <ion-item [routerLink]=\"['/account/personal-information']\">\n        <ion-label>My personal information</ion-label>\n      </ion-item>\n      <ion-item [routerLink]=\"['/account/shopping-history']\">\n        <ion-label>Shopping history</ion-label>\n      </ion-item>\n      <ion-item (click)=\"presentActionSheet()\">\n        <ion-label>Logout</ion-label>\n      </ion-item>\n    </div>\n\n    <ng-template #login> \n      <ion-item [routerLink]=\"['/account/login']\">\n        <ion-label>Login</ion-label>\n      </ion-item>\n    </ng-template>\n    \n  </ion-list>\n</ion-content>\n");
 
 /***/ })
 

@@ -16,10 +16,10 @@ export class ProductCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.id, typeof this.images)
-    if(typeof this.images == 'string' && this.images != '') this.mainImage = this.images
+    console.log(this.id, typeof this.images[0])
+    if(typeof this.images == 'string' && this.images != '') this.mainImage = this.images.split(',')[0]
     else if(typeof this.images == 'object') this.mainImage = this.images[0]
-    else this.mainImage = 'https://picsum.photos/800/400'
+    else this.mainImage = 'https://picsum.photos/400/400'
     console.log(this.mainImage)
   }
 

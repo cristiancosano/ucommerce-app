@@ -132,7 +132,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! tslib */
       61855);
       /* harmony import */
@@ -150,19 +150,62 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/core */
       42741);
+      /* harmony import */
 
-      var _AppComponent = function AppComponent() {
-        _classCallCheck(this, AppComponent);
-      };
+
+      var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @angular/router */
+      29535);
+      /* harmony import */
+
+
+      var _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @awesome-cordova-plugins/nfc/ngx */
+      89297);
+
+      var _AppComponent = /*#__PURE__*/function () {
+        function AppComponent(nfc, ndef, router) {
+          _classCallCheck(this, AppComponent);
+
+          this.nfc = nfc;
+          this.ndef = ndef;
+          this.router = router;
+          this.scanNfcTag();
+        }
+
+        _createClass(AppComponent, [{
+          key: "scanNfcTag",
+          value: function scanNfcTag() {
+            var _this = this;
+
+            var flags = this.nfc.FLAG_READER_NFC_A | this.nfc.FLAG_READER_NFC_V;
+            this.nfc.readerMode(flags).subscribe(function (tag) {
+              var text = _this.nfc.bytesToString(tag.ndefMessage[0].payload).substring(3);
+
+              _this.router.navigate(['products', text]);
+            }, function (err) {
+              return console.log('Error reading tag', err);
+            });
+          }
+        }]);
+
+        return AppComponent;
+      }();
 
       _AppComponent.ctorParameters = function () {
-        return [];
+        return [{
+          type: _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_2__.NFC
+        }, {
+          type: _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_2__.Ndef
+        }, {
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router
+        }];
       };
 
-      _AppComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+      _AppComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-root',
         template: _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_app_component_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -198,49 +241,49 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! tslib */
       61855);
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/core */
       42741);
       /* harmony import */
 
 
-      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/platform-browser */
       93220);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! @angular/router */
       29535);
       /* harmony import */
 
 
-      var _angular_common_http__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! @angular/common/http */
       31887);
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/common */
       16274);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @ionic/angular */
       34595);
       /* harmony import */
 
 
-      var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @angular/forms */
       93324);
       /* harmony import */
@@ -267,19 +310,25 @@
       var _services_category_category_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! ./services/category/category.service */
       53998);
+      /* harmony import */
+
+
+      var _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! @awesome-cordova-plugins/nfc/ngx */
+      89297);
 
       var _AppModule = function AppModule() {
         _classCallCheck(this, AppModule);
       };
 
-      _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule)({
+      _AppModule = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_8__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.ReactiveFormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule],
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_9__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.ReactiveFormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormsModule, _angular_common__WEBPACK_IMPORTED_MODULE_11__.CommonModule],
         providers: [{
-          provide: _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouteReuseStrategy,
-          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicRouteStrategy
-        }, _services_product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService, _services_category_category_service__WEBPACK_IMPORTED_MODULE_3__.CategoryService],
+          provide: _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouteReuseStrategy,
+          useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicRouteStrategy
+        }, _services_product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService, _services_category_category_service__WEBPACK_IMPORTED_MODULE_3__.CategoryService, _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_4__.NFC, _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_4__.Ndef],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent]
       })], _AppModule);
       /***/
@@ -346,10 +395,10 @@
         _createClass(CategoryService, [{
           key: "getCategories",
           value: function getCategories() {
-            var _this = this;
+            var _this2 = this;
 
             return new Promise(function (resolve) {
-              _this.http.get(_this.host).subscribe(function (data) {
+              _this2.http.get(_this2.host).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return console.log(error);
@@ -359,10 +408,10 @@
         }, {
           key: "getCategory",
           value: function getCategory(id) {
-            var _this2 = this;
+            var _this3 = this;
 
             return new Promise(function (resolve) {
-              _this2.http.get(_this2.host + "/".concat(id)).subscribe(function (data) {
+              _this3.http.get(_this3.host + "/".concat(id)).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return console.log(error);
@@ -372,10 +421,10 @@
         }, {
           key: "getProductsByCategoryId",
           value: function getProductsByCategoryId(id) {
-            var _this3 = this;
+            var _this4 = this;
 
             return new Promise(function (resolve) {
-              _this3.http.get(_this3.host + "/".concat(id, "/products")).subscribe(function (data) {
+              _this4.http.get(_this4.host + "/".concat(id, "/products")).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return console.log(error);
@@ -385,10 +434,10 @@
         }, {
           key: "createCategory",
           value: function createCategory(category, token) {
-            var _this4 = this;
+            var _this5 = this;
 
             return new Promise(function (resolve) {
-              _this4.http.post(_this4.host, JSON.stringify(category)).subscribe(function (data) {
+              _this5.http.post(_this5.host, JSON.stringify(category)).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return console.log(error);
@@ -398,10 +447,10 @@
         }, {
           key: "updateCategory",
           value: function updateCategory(category, token) {
-            var _this5 = this;
+            var _this6 = this;
 
             return new Promise(function (resolve) {
-              _this5.http.put(_this5.host, JSON.stringify(category)).subscribe(function (data) {
+              _this6.http.put(_this6.host, JSON.stringify(category)).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return console.log(error);
@@ -411,10 +460,10 @@
         }, {
           key: "deleteCategory",
           value: function deleteCategory(id, token) {
-            var _this6 = this;
+            var _this7 = this;
 
             return new Promise(function (resolve) {
-              _this6.http["delete"](_this6.host + "/".concat(id)).subscribe(function (data) {
+              _this7.http["delete"](_this7.host + "/".concat(id)).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return console.log(error);
@@ -499,10 +548,10 @@
         _createClass(ProductService, [{
           key: "getProducts",
           value: function getProducts() {
-            var _this7 = this;
+            var _this8 = this;
 
             return new Promise(function (resolve) {
-              _this7.http.get(_this7.host).subscribe(function (data) {
+              _this8.http.get(_this8.host).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return console.log(error);
@@ -512,10 +561,10 @@
         }, {
           key: "getProduct",
           value: function getProduct(id) {
-            var _this8 = this;
+            var _this9 = this;
 
             return new Promise(function (resolve, reject) {
-              _this8.http.get(_this8.host + "/".concat(id)).subscribe(function (data) {
+              _this9.http.get(_this9.host + "/".concat(id)).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return reject(error);
@@ -525,14 +574,14 @@
         }, {
           key: "getProductsByText",
           value: function getProductsByText(text) {
-            var _this9 = this;
+            var _this10 = this;
 
             var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpParams().appendAll({
               text: text
             });
             var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
             return new Promise(function (resolve) {
-              _this9.http.post(_this9.host + '/search', params, {
+              _this10.http.post(_this10.host + '/search', params, {
                 headers: headers
               }).subscribe(function (data) {
                 return resolve(data);
@@ -544,10 +593,10 @@
         }, {
           key: "createCategory",
           value: function createCategory(product, token) {
-            var _this10 = this;
+            var _this11 = this;
 
             return new Promise(function (resolve) {
-              _this10.http.post(_this10.host, JSON.stringify({
+              _this11.http.post(_this11.host, JSON.stringify({
                 product: product,
                 token: token
               })).subscribe(function (data) {
@@ -560,10 +609,10 @@
         }, {
           key: "updateCategory",
           value: function updateCategory(product, token) {
-            var _this11 = this;
+            var _this12 = this;
 
             return new Promise(function (resolve) {
-              _this11.http.put(_this11.host, JSON.stringify({
+              _this12.http.put(_this12.host, JSON.stringify({
                 product: product,
                 token: token
               })).subscribe(function (data) {
@@ -576,10 +625,10 @@
         }, {
           key: "deleteCategory",
           value: function deleteCategory(id, token) {
-            var _this12 = this;
+            var _this13 = this;
 
             return new Promise(function (resolve) {
-              _this12.http["delete"](_this12.host + "/".concat(id)).subscribe(function (data) {
+              _this13.http["delete"](_this13.host + "/".concat(id)).subscribe(function (data) {
                 return resolve(data);
               }, function (error) {
                 return console.log(error);
@@ -805,7 +854,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-app>\r\n  <ion-router-outlet></ion-router-outlet>\r\n</ion-app>\r\n";
+      __webpack_exports__["default"] = "<ion-app>\n  <ion-router-outlet></ion-router-outlet>\n</ion-app>\n";
       /***/
     }
   },

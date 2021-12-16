@@ -386,13 +386,13 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/core */
       42741);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/router */
       29535);
       /* harmony import */
@@ -407,15 +407,29 @@
       var src_app_services_cart_cart_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! src/app/services/cart/cart.service */
       20053);
+      /* harmony import */
+
+
+      var src_app_services_order_order_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! src/app/services/order/order.service */
+      6028);
+      /* harmony import */
+
+
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      /*! @ionic/angular */
+      34595);
 
       var _CartPage = /*#__PURE__*/function () {
-        function CartPage(route, productService, cartService, router) {
+        function CartPage(route, productService, cartService, router, orderService, toastController) {
           _classCallCheck(this, CartPage);
 
           this.route = route;
           this.productService = productService;
           this.cartService = cartService;
           this.router = router;
+          this.orderService = orderService;
+          this.toastController = toastController;
           this.cart = {
             items: []
           };
@@ -471,6 +485,48 @@
 
             return total.toFixed(2);
           }
+        }, {
+          key: "presentToast",
+          value: function presentToast(message) {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var toast;
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.next = 2;
+                      return this.toastController.create({
+                        message: message,
+                        duration: 2500,
+                        position: 'bottom'
+                      });
+
+                    case 2:
+                      toast = _context.sent;
+                      _context.next = 5;
+                      return toast.present();
+
+                    case 5:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          }
+        }, {
+          key: "pay",
+          value: function pay() {
+            var _this2 = this;
+
+            this.orderService.createOrder(Number(this.getTotal()), this.cart.items).then(function () {
+              _this2.presentToast('Pedido realizado correctamente!!');
+
+              _this2.cartService.removeItems();
+            })["catch"](function () {
+              _this2.presentToast('Ha ocurrido un problema al realizar el pedido :(');
+            });
+          }
         }]);
 
         return CartPage;
@@ -478,17 +534,21 @@
 
       _CartPage.ctorParameters = function () {
         return [{
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.ActivatedRoute
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute
         }, {
           type: src_app_services_product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService
         }, {
           type: src_app_services_cart_cart_service__WEBPACK_IMPORTED_MODULE_3__.CartService
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.Router
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.Router
+        }, {
+          type: src_app_services_order_order_service__WEBPACK_IMPORTED_MODULE_4__.OrderService
+        }, {
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ToastController
         }];
       };
 
-      _CartPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+      _CartPage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-cart',
         template: _raw_loader_cart_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_cart_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -528,7 +588,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = ".text-center {\n  text-align: center;\n}\n\n.full-height {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n#shopping-cart-image {\n  width: 50%;\n  margin: 5% auto;\n  display: block;\n  filter: grayscale(50%) opacity(40%);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNhcnQucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtBQUNKOztBQUVBO0VBQ0ksVUFBQTtFQUNBLGVBQUE7RUFDQSxjQUFBO0VBQ0EsbUNBQUE7QUFDSiIsImZpbGUiOiJjYXJ0LnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi50ZXh0LWNlbnRlcntcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG5cclxuLmZ1bGwtaGVpZ2h0e1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5cclxuI3Nob3BwaW5nLWNhcnQtaW1hZ2V7XHJcbiAgICB3aWR0aDogNTAlO1xyXG4gICAgbWFyZ2luOiA1JSBhdXRvO1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBmaWx0ZXI6IGdyYXlzY2FsZSg1MCUpIG9wYWNpdHkoNDAlKTtcclxufSJdfQ== */";
+      __webpack_exports__["default"] = ".text-center {\n  text-align: center;\n}\n\n.full-height {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n#shopping-cart-image {\n  width: 50%;\n  margin: 5% auto;\n  display: block;\n  filter: grayscale(50%) opacity(40%);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNhcnQucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7QUFDSjs7QUFFQTtFQUNJLFlBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtBQUNKOztBQUVBO0VBQ0ksVUFBQTtFQUNBLGVBQUE7RUFDQSxjQUFBO0VBQ0EsbUNBQUE7QUFDSiIsImZpbGUiOiJjYXJ0LnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi50ZXh0LWNlbnRlcntcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5mdWxsLWhlaWdodHtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xufVxuXG4jc2hvcHBpbmctY2FydC1pbWFnZXtcbiAgICB3aWR0aDogNTAlO1xuICAgIG1hcmdpbjogNSUgYXV0bztcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBmaWx0ZXI6IGdyYXlzY2FsZSg1MCUpIG9wYWNpdHkoNDAlKTtcbn0iXX0= */";
       /***/
     },
 
@@ -546,7 +606,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-item  [routerLink]=\"['/cart', id]\">\r\n  <ion-thumbnail slot=\"start\">\r\n    <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\r\n  </ion-thumbnail>\r\n  <ion-label>\r\n    <h3>Cantidad: {{quantity}}</h3>\r\n    <p>Precio unitario: {{price}}</p>\r\n    <p><strong>Total: </strong> EUR {{total}}</p>\r\n  </ion-label>\r\n</ion-item>";
+      __webpack_exports__["default"] = "<ion-item  [routerLink]=\"['/cart', id]\">\n  <ion-thumbnail slot=\"start\">\n    <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\n  </ion-thumbnail>\n  <ion-label>\n    <h3>Cantidad: {{quantity}}</h3>\n    <p>Precio unitario: {{price}}</p>\n    <p><strong>Total: </strong> EUR {{total}}</p>\n  </ion-label>\n</ion-item>";
       /***/
     },
 
@@ -564,7 +624,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>Carrito</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n\r\n<ion-content>\r\n  <div *ngIf=\"cart.items.length > 0; else noItems\">\r\n    <ion-list>\r\n      <ion-item *ngFor=\"let item of cart.items\" class=\"ion-text-wrap\">\r\n        <ion-grid>\r\n          <ion-row class=\"ion-aling-items-center\">\r\n            <ion-col size-xs=\"5\" size-sm=\"3\" size-md=\"2\" class=\"ion-align-items-center\">\r\n              <ion-select style=\"margin: 0\" interface=\"popover\" value=\"{{item.quantity}}\" (ionChange)=\"updateItemUnits($event.detail.value, item.productId)\">\r\n                <ion-select-option value=\"{{i}}\"  *ngFor=\"let element of [].constructor(10); let i = index\">\r\n                  {{i}}\r\n                  <span *ngIf=\"i==0\">(eliminar)</span>\r\n                </ion-select-option>\r\n\r\n              </ion-select>\r\n            </ion-col>\r\n            <ion-col size-xs=\"7\" size-sm=\"9\" size-md=\"10\">\r\n              {{item.name}}\r\n            </ion-col>\r\n          </ion-row>\r\n        </ion-grid>\r\n      </ion-item>\r\n      <ion-item >\r\n        Total: <span slot=\"end\">{{getTotal()}} €</span>\r\n      </ion-item>\r\n    </ion-list>\r\n\r\n    <div class=\"center\">\r\n      <ion-button expand=\"block\" (click)=\"removeItems()\">Eliminar Carrito</ion-button>\r\n    </div>\r\n  \r\n    <div class=\"center\">\r\n      <ion-button expand=\"block\">Realizar Pedido</ion-button>\r\n    </div>\r\n  </div>\r\n\r\n  <ng-template #noItems>\r\n    <div class=\"full-height\">\r\n      <div class=\"vertical-align-middle\">\r\n        <img src=\"assets/images/shopping-cart.png\" alt=\"Shopping Cart\" width=\"50%\" id=\"shopping-cart-image\">\r\n        <p class=\"text-center\">There are no items in the cart. Add first someone product.</p>\r\n      </div>\r\n    </div>\r\n  </ng-template>\r\n\r\n</ion-content>";
+      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar>\n    <ion-title>Carrito</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n\n<ion-content>\n  <div *ngIf=\"cart.items.length > 0; else noItems\">\n    <ion-list>\n      <ion-item *ngFor=\"let item of cart.items\" class=\"ion-text-wrap\">\n        <ion-grid>\n          <ion-row class=\"ion-aling-items-center\">\n            <ion-col size-xs=\"5\" size-sm=\"3\" size-md=\"2\" class=\"ion-align-items-center\">\n              <ion-select style=\"margin: 0\" interface=\"popover\" value=\"{{item.quantity}}\" (ionChange)=\"updateItemUnits($event.detail.value, item.productId)\">\n                <ion-select-option value=\"{{i}}\"  *ngFor=\"let element of [].constructor(10); let i = index\">\n                  {{i}}\n                  <span *ngIf=\"i==0\">(eliminar)</span>\n                </ion-select-option>\n\n              </ion-select>\n            </ion-col>\n            <ion-col size-xs=\"7\" size-sm=\"9\" size-md=\"10\">\n              {{item.name}}\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-item>\n      <ion-item >\n        Total: <span slot=\"end\">{{getTotal()}} €</span>\n      </ion-item>\n    </ion-list>\n\n    <div class=\"center\">\n      <ion-button expand=\"block\" (click)=\"removeItems()\">Eliminar Carrito</ion-button>\n    </div>\n  \n    <div class=\"center\">\n      <ion-button expand=\"block\" (click)=\"pay()\">Realizar Pedido</ion-button>\n    </div>\n  </div>\n\n  <ng-template #noItems>\n    <div class=\"full-height\">\n      <div class=\"vertical-align-middle\">\n        <img src=\"assets/images/shopping-cart.png\" alt=\"Shopping Cart\" width=\"50%\" id=\"shopping-cart-image\">\n        <p class=\"text-center\">There are no items in the cart. Add first someone product.</p>\n      </div>\n    </div>\n  </ng-template>\n\n</ion-content>";
       /***/
     }
   }]);

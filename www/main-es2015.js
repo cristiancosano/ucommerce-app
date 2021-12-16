@@ -71,20 +71,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppComponent": function() { return /* binding */ AppComponent; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 61855);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 61855);
 /* harmony import */ var _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./app.component.html */ 91106);
 /* harmony import */ var _app_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component.scss */ 43069);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 42741);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 42741);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 29535);
+/* harmony import */ var _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @awesome-cordova-plugins/nfc/ngx */ 89297);
+
+
 
 
 
 
 let AppComponent = class AppComponent {
-    constructor() { }
+    constructor(nfc, ndef, router) {
+        this.nfc = nfc;
+        this.ndef = ndef;
+        this.router = router;
+        this.scanNfcTag();
+    }
+    scanNfcTag() {
+        let flags = this.nfc.FLAG_READER_NFC_A | this.nfc.FLAG_READER_NFC_V;
+        this.nfc.readerMode(flags).subscribe(tag => {
+            const text = this.nfc.bytesToString(tag.ndefMessage[0].payload).substring(3);
+            this.router.navigate(['products', text]);
+        }, err => console.log('Error reading tag', err));
+    }
 };
-AppComponent.ctorParameters = () => [];
-AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+AppComponent.ctorParameters = () => [
+    { type: _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_2__.NFC },
+    { type: _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_2__.Ndef },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router }
+];
+AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-root',
         template: _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_app_component_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -106,18 +126,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": function() { return /* binding */ AppModule; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 61855);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 42741);
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser */ 93220);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 29535);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common/http */ 31887);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 16274);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 34595);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 93324);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 61855);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 42741);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/platform-browser */ 93220);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 29535);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ 31887);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 16274);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 34595);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ 93324);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-routing.module */ 70809);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 20721);
 /* harmony import */ var _services_product_product_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/product/product.service */ 53845);
 /* harmony import */ var _services_category_category_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/category/category.service */ 53998);
+/* harmony import */ var _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @awesome-cordova-plugins/nfc/ngx */ 89297);
+
 
 
 
@@ -132,12 +154,12 @@ __webpack_require__.r(__webpack_exports__);
 
 let AppModule = class AppModule {
 };
-AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule)({
+AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule)({
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_6__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_8__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.ReactiveFormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule],
-        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicRouteStrategy }, _services_product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService, _services_category_category_service__WEBPACK_IMPORTED_MODULE_3__.CategoryService],
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_9__.HttpClientModule, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.ReactiveFormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormsModule, _angular_common__WEBPACK_IMPORTED_MODULE_11__.CommonModule],
+        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicRouteStrategy }, _services_product_product_service__WEBPACK_IMPORTED_MODULE_2__.ProductService, _services_category_category_service__WEBPACK_IMPORTED_MODULE_3__.CategoryService, _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_4__.NFC, _awesome_cordova_plugins_nfc_ngx__WEBPACK_IMPORTED_MODULE_4__.Ndef],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
     })
 ], AppModule);
@@ -594,7 +616,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\r\n  <ion-router-outlet></ion-router-outlet>\r\n</ion-app>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-router-outlet></ion-router-outlet>\n</ion-app>\n");
 
 /***/ })
 

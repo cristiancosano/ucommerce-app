@@ -221,71 +221,6 @@ ShoppingHistoryPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
 
 /***/ }),
 
-/***/ 6028:
-/*!*************************************************!*\
-  !*** ./src/app/services/order/order.service.ts ***!
-  \*************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "OrderService": function() { return /* binding */ OrderService; }
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 61855);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ 31887);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 42741);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 24766);
-/* harmony import */ var _user_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../user/user.service */ 33626);
-
-
-
-
-
-let OrderService = class OrderService {
-    constructor(http, userService) {
-        this.http = http;
-        this.userService = userService;
-        this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiHost + '/users';
-        this.host2 = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.apiHost + '/orders';
-    }
-    getOrders() {
-        return new Promise(resolve => {
-            const token = this.userService.getToken();
-            const decodedToken = this.userService.getDecodedToken();
-            const customerId = decodedToken.customerId;
-            const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpParams().appendAll({ token });
-            console.log(token);
-            console.log(this.host);
-            const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-            this.http.get(this.host + `/${customerId}/shopping-history`, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
-        });
-    }
-    getOrderById(orderId) {
-        return new Promise(resolve => {
-            const token = this.userService.getToken();
-            const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpParams().appendAll({ token });
-            console.log(token);
-            console.log(this.host);
-            const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-            this.http.get(this.host2 + `/${orderId}`, { headers, params }).subscribe(data => resolve(data), error => console.log(error));
-        });
-    }
-};
-OrderService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient },
-    { type: _user_user_service__WEBPACK_IMPORTED_MODULE_1__.UserService }
-];
-OrderService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
-        providedIn: 'root'
-    })
-], OrderService);
-
-
-
-/***/ }),
-
 /***/ 77892:
 /*!*****************************************************************!*\
   !*** ./src/app/components/order-card/order-card.component.scss ***!
@@ -318,7 +253,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-item  [routerLink]=\"['/account/shopping-history', id]\">\r\n  <ion-thumbnail slot=\"start\">\r\n    <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\r\n  </ion-thumbnail>\r\n  <ion-label>\r\n    <h3>Pedido nº{{id}}</h3>\r\n    <p>Comprado el: {{createdAt | date:'dd/MM/yyyy - hh:mm'}}</p>\r\n    <div *ngIf=\"createdAt != updatedAt\">\r\n      <p>Modificado el: {{updatedAt | date:'dd/MM/yyyy - hh:mm'}}</p>\r\n    </div>\r\n    <p><strong>Total: </strong> EUR {{total}}</p>\r\n  </ion-label>\r\n</ion-item>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-item  [routerLink]=\"['/account/shopping-history', id]\">\n  <ion-thumbnail slot=\"start\">\n    <img src=\"https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y\">\n  </ion-thumbnail>\n  <ion-label>\n    <h3>Pedido nº{{id}}</h3>\n    <p>Comprado el: {{createdAt | date:'dd/MM/yyyy - hh:mm'}}</p>\n    <div *ngIf=\"createdAt != updatedAt\">\n      <p>Modificado el: {{updatedAt | date:'dd/MM/yyyy - hh:mm'}}</p>\n    </div>\n    <p><strong>Total: </strong> EUR {{total}}</p>\n  </ion-label>\n</ion-item>");
 
 /***/ }),
 
@@ -330,7 +265,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"start\">\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n    <ion-title>Shopping History</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-grid>\r\n    <ion-row>\r\n      <ion-col size-xs=\"12\" size-sm=\"12\" size-md=\"12\" size-lg=\"12\" *ngFor=\"let order of orders\">\r\n        <app-order-card id=\"{{order.orderId}}\" total=\"{{order.total}}\" createdAt=\"{{order.createdAt}}\" updatedAt=\"{{order.updatedAt}}\"></app-order-card>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n</ion-content>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>Shopping History</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid>\n    <ion-row>\n      <ion-col size-xs=\"12\" size-sm=\"12\" size-md=\"12\" size-lg=\"12\" *ngFor=\"let order of orders\">\n        <app-order-card id=\"{{order.orderId}}\" total=\"{{order.total}}\" createdAt=\"{{order.createdAt}}\" updatedAt=\"{{order.updatedAt}}\"></app-order-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
 
 /***/ })
 
